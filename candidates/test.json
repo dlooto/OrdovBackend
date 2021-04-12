@@ -1,0 +1,19 @@
+{
+    "candidate":
+        {
+            "name": "何况",
+            "gender": "m",
+            "birth_year": "1985",
+            "birth_month": "8",
+            "date_of_birth": "1985-08-03T00:21:08Z",
+            "identity": "130802198508030019",
+            "phone_number": "+86186100285137",
+            "qq": 499737168,
+            "residence": "深圳市南山区",
+            "email": "korenhe@outlook.com",
+            "marriaged": false,
+            "degree": "本科",
+            "major": "微电子",
+            "school": "复旦大学"
+        }
+}

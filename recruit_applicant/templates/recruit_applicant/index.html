@@ -1,0 +1,133 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Landing Page - Start Bootstrap Theme</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'recruit_applicant/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  {% include 'landing_page/font.html' %}
+  <link href="{% static 'recruit_applicant/vendor/simple-line-icons/css/simple-line-icons.css' %}" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template -->
+  <link href="{% static 'recruit_applicant/css/landing-page.css' %}" rel="stylesheet">
+  <link href="{% static 'landing_page/css/one-page-wonder.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+  {% include 'landing_page/nav.html' %}
+
+  <!-- Masthead -->
+  <header class="masthead text-white text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <h1 class="mb-5">Welcome Aboard!</h1>
+          <h3 class="lead mb-0">SITENAME makes searching jobs easy</h3>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Icons Grid -->
+  <section class="features-icons bg-light text-center">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+            <div class="features-icons-icon d-flex">
+              <i class="icon-layers m-auto text-primary"></i>
+            </div>
+            <h3>
+              <a href={% url 'candidate_update_resume' %}>写简历</a>
+            </h3>
+            <p class="lead mb-0"> 更新简历吧，让更多的企业发现你 </p>
+
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+            <div class="features-icons-icon d-flex">
+              <i class="icon-screen-desktop m-auto text-primary"></i>
+            </div>
+            <h3>
+              <a href={% url 'app_manager:t_resumes' %}>查看简历</a>
+            </h3>
+            <p class="lead mb-0">检查并确认你的简历信息</p>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+            <div class="features-icons-icon d-flex">
+              <i class="icon-check m-auto text-primary"></i>
+            </div>
+            <h3>
+              <a href={% url 'app_manager:t_posts' %}>找工作</a>
+            </h3>
+            <p class="lead mb-0"> 查看适合的工作岗位 </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Image Showcases -->
+  <section class="showcase">
+    <div class="container-fluid p-0">
+      <div class="row no-gutters">
+
+        <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url({% static 'recruit_applicant/img/bg-showcase-2.jpg' %});"></div>
+        <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+          <h2>Online Interview Schedule</h2>
+          <p class="lead mb-0">SITENAME is an advanced recruite platform for the under gradute or fresh man with a job experience within five years. SITENAME is your home, where you can communicate with your contemporary. Have a nice time in SITETIME.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 h-100 text-center text-lg-left my-auto">
+          <p class="text-muted small mb-4 mb-lg-0">&copy; Your Website 2019. All Rights Reserved.</p>
+        </div>
+        <div class="col-lg-6 h-100 text-center text-lg-right my-auto">
+          <ul class="list-inline mb-0">
+            <li class="list-inline-item mr-3">
+              <a href="#">
+                <i class="fab fa-facebook fa-2x fa-fw"></i>
+              </a>
+            </li>
+            <li class="list-inline-item mr-3">
+              <a href="#">
+                <i class="fab fa-twitter-square fa-2x fa-fw"></i>
+              </a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">
+                <i class="fab fa-instagram fa-2x fa-fw"></i>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'recruit_applicant/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'recruit_applicant/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+
+</html>

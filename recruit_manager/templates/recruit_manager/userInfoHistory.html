@@ -1,0 +1,179 @@
+<div class="layui-card">
+  <div class="layui-card-header">更新日期：2019年3月11日</div>
+  <div class="layui-card-header">为候选人打标签</div>
+  <div class="layui-card-body layui-row layui-col-space10">
+    <div id="main1" class="layui-col-sm12">
+      <li class="layui-timeline-item">
+        <div class="layui-timeline-content layui-text" style="display:none">
+          <p>王志阳：19：06：02 ：候选人很优秀</p>
+        </div>
+      </li>
+      <div class="layui-form-item">
+        <div class="layui-input-inline">
+          <input type="text" id="userNewTag" required="" lay-verify="email" autocomplete="off" class="layui-input">
+        </div>
+        <button class="layui-btn" id="userTagAddButton">新增</button>
+        <div class="layui-form-item">
+			<span class="layui-col-sm12" id="userTagPanel">
+			</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="layui-card">
+  <div class="layui-card-header">个人意愿更新</div>
+    <div class="layui-card-body layui-row layui-col-space10" id="expectedPanel">
+
+      <div class="layui-col-sm12">
+        <div class="layui-form-item">
+
+<!--          <div class="layui-col-sm12">-->
+<!--            <form>-->
+<!--              <div class="form-group">-->
+<!--                <label for="text_expected_post" class="col-form-label">工作状态</label>-->
+<!--                &lt;!&ndash; 修改为layui radio &ndash;&gt;-->
+<!--			     <select class="form-control" id="userCurJobState">-->
+<!--                    <option value=-1></option>-->
+<!--                    <option value=1>在职,不找工作</option>-->
+<!--                    <option value=2>在职,考虑新机会</option>-->
+<!--                    <option value=3>离职,正在找工作</option>-->
+<!--                    <option value=4>其他</option>-->
+<!--                 </select>-->
+<!--              </div>-->
+<!--            </form>-->
+<!--          </div>-->
+
+<!--          <div class="layui-col-sm6">-->
+<!--            <form>-->
+<!--              <div class="form-group">-->
+<!--                <label for="text_expected_post" class="col-form-label">期望行业</label>-->
+<!--                <select class="form-control" id="userExpectArea">-->
+<!--				  <option value=-1></option>-->
+<!--				  <option value=1>计算机软件</option>-->
+<!--				  <option value=2>通信</option>-->
+<!--				  <option value=3>建筑</option>-->
+<!--				  <option value=4>房地产</option>-->
+<!--				  <option value=5>家居装修</option>-->
+<!--				  <option value=6>其他</option>-->
+<!--                </select>-->
+<!--              </div>-->
+<!--            </form>-->
+<!--          </div>-->
+
+<!--          <div class="layui-col-sm6">-->
+<!--            <form>-->
+<!--              <div class="form-group">-->
+<!--                <label for="text_expected_post" class="col-form-label">期望岗位</label>-->
+<!--                <select class="form-control" id="userExpectPost">-->
+<!--                  <option value=-1></option>-->
+<!--                  <option value=1>普通员工</option>-->
+<!--                  <option value=2>项目经理</option>-->
+<!--                  <option value=3>总监</option>-->
+<!--                </select>-->
+<!--              </div>-->
+<!--            </form>-->
+<!--          </div>-->
+
+          <div class="layui-col-sm6">
+            <form>
+              <div class="form-group">
+                <label for="text_expected_shift" class="col-form-label">期望作息时间</label>
+                <select class="form-control" id="userExpectRestModel">
+                  <option value=-1></option>
+                  <option value=1>做五休二</option>
+                  <option value=2>单双休</option>
+                  <option value=3>单休</option>
+                  <option value=4>无休</option>
+                </select>
+              </div>
+            </form>
+          </div>
+
+          <div class="layui-col-sm6">
+            <form>
+              <div class="form-group">
+                <label for="text_expected_shift" class="col-form-label">期望社保购买地</label>
+				  <select class="form-control" id="userExpectInsurancePlace">
+                    <option value=-1></option>
+                    <option value=1>本地最低</option>
+                    <option value=2>本地实缴</option>
+                    <option value=3>外地最低</option>
+                    <option value=4>外地实缴</option>
+                    <option value=5>不购买</option>
+                  </select>
+              </div>
+            </form>
+          </div>
+
+          <div class="layui-col-sm6">
+            <form>
+              <div class="form-group">
+                <label for="text_expected_shift" class="col-form-label">期望社保购买时间</label>
+				  <select class="form-control" id="userExpectInsuranceTime">
+                    <option value=-1></option>
+                    <option value=1>转正购买</option>
+                    <option value=2>入职购买</option>
+                    <option value=3>不购买</option>
+                  </select>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+
+    <div class="layui-col-sm12" style="display:none">
+      <div class="layui-form-item">
+		<h6>期望工作的省市区信息</h6>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userExpectProvince2" name="expected_province" placeholder="省" autocomplete="off" class="layui-input layui-from-checked">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userExpectCity2" name="expected_province" placeholder="市" autocomplete="off" class="layui-input">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="userExpectDistrict2" name="degree" placeholder="区" autocomplete="off" class="layui-input">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input class="layui-input" autocomplete="off" placeholder="街道" id="userExpectStreet">
+        </h5>
+      </div>
+    </div>
+
+
+<!--    <div class="layui-col-sm12">-->
+<!--      <div class="layui-form-item">-->
+<!--		<h6>期望薪水(元/月)</h6>-->
+<!--        <h5 class="layui-col-sm12">-->
+<!--          <input type="text" id="userExpectSalary" name="gender" placeholder="单位/元" autocomplete="off" class="layui-input layui-from-checked">-->
+<!--        </h5>-->
+<!--      </div>-->
+<!--    </div>-->
+
+    </div>
+  </div>
+</div>
+
+<div class="layui-card" style="display:none">
+  <div class="layui-card-header">历史记录</div>
+  <div class="layui-card-body layui-row layui-col-space10">
+    <div id="main1" class="layui-col-sm12">
+      <li class="layui-timeline-item">
+        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+        <div class="layui-timeline-content layui-text">
+          <h3 class="layui-timeline-title">职位一：企业选址顾问</h3>
+          <p>19年3月30日 </p>
+          </div>
+      </li>
+      <li class="layui-timeline-item">
+        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+        <div class="layui-timeline-content layui-text">
+          <h3 class="layui-timeline-title">职位二：销售专员</h3>
+          <p>19年3月30日</p>
+        </div>
+      </li>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,1463 @@
+{% extends "recruit_manager/table_basic2.html" %}
+
+{% load static %}
+{% block content %}
+
+<?-- Modal: Project Selector ---->
+<div class="modal fade" id="projSelector" tabindex="-1" role="dialog" aria-labelledby="projSeletor" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div class="modal-body">
+	    <div class="container"><?-- The project selector as a modal -->
+          <div class="col-12" style="display">
+
+            <h5 class="mb-0">
+            <button id="text_company_name2" class="btn btn-link" data-toggle="collapse" data-target="#collapsePost" aria-expanded="true" aria-controls="collapsePost">
+              选择项目
+            </button>
+            </h5>
+
+            <div class="table-responsive">
+              <table class="table table-bordered table-hover" id="dataTable_post2" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                    <th>Project Name</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+
+          </div>
+	    </div><?-- End: The project selector as a modal -->
+      </div> <?-- End: modal-body -->
+
+	  <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+	  </div>
+
+    </div> <?-- End: modal-content -->
+  </div>
+</div>
+
+<div class="float-button-left-triangle" id="projectSelectShow" style="display:none;">
+</div>
+
+<div class="float-button-left-triangle" id="projPermission">
+</div>
+
+<a href="#" class="btn" data-action="open" data-side="right" style="display:none;"><span>Toggle Right</span></a>
+
+<div>
+
+  <div class="row" style="display:none">
+    <div class="col-md-12">
+      <p style="display:inline;">项目名:</p>
+      <p id="projectName" style="display:inline;">未指定</p>
+    </div>
+  </div>
+
+  <div class="row" style="display:none">
+    <div class="col-md-12">
+      <p style="display:inline;">项目基本信息:</p>
+	  <p id="projectInfo" style="display:inline;">请选择项目</p>
+    </div>
+  </div>
+
+  <div class="row">
+    <?-- The project selector as a modal -->
+    <div class="col-2" id="projectPanel" style="padding:0px;">
+      <div class="container card-header" style="padding:8px;">
+
+        <div class="row">
+          <div class="col-md-10">
+          </div>
+          <div class="col-md-2 pull-right">
+            <i class="fas fa-times" id="closeProject" style="text-align:right;"></i>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-11">
+
+            <h5>
+              <button id="text_company_name" class="btn btn-link" data-toggle="collapse" data-target="#collapsePost" aria-expanded="true" aria-controls="collapsePost">
+              选择项目
+              </button>
+            </h5>
+
+            <div class="table-responsive">
+              <table class="table table-hover" id="dataTable_post" width="100%" cellspacing="0">
+                <thead>
+                  <tr>
+                  <th>Project Name</th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+
+          </div>
+        </div> <?--- row --->
+
+      </div> <?--- End: card-header-->
+    </div> <?-- End: projectPanel -->
+
+    <div class="col-10" id="mainOpPanel" style="bac:black;">
+      <div class="list-group list-group-horizontal">
+        <li class="list-group-item list-group-item-action active" data-toggle="list" value="0">
+          待筛选
+          <span id="badge_statistic_stage_0" class="badge badge-primary badge-pill"></span>
+        </li>
+        <li class="list-group-item list-group-item-action" data-toggle="list" value="1">
+          筛选
+          <span id="badge_statistic_stage_1" class="badge badge-primary badge-pill"></span>
+        </li>
+        <li class="list-group-item list-group-item-action" data-toggle="list" value="2">
+          邀约
+          <span id="badge_statistic_stage_2" class="badge badge-primary badge-pill"></span>
+        </li>
+        <li class="list-group-item list-group-item-action" data-toggle="list" value="3">
+          面试
+          <span id="badge_statistic_stage_3" class="badge badge-primary badge-pill"></span>
+        </li>
+        <li class="list-group-item list-group-item-action" data-toggle="list" value="4">
+          OFFER
+          <span id="badge_statistic_stage_4" class="badge badge-primary badge-pill"></span>
+        </li>
+        <li class="list-group-item list-group-item-action" data-toggle="list" value="5">
+          入职
+          <span id="badge_statistic_stage_5" class="badge badge-primary badge-pill"></span>
+        </li>
+        <li class="list-group-item list-group-item-action" data-toggle="list" value="6">
+          考察
+          <span id="badge_statistic_stage_6" class="badge badge-primary badge-pill"></span>
+        </li>
+        <li class="list-group-item list-group-item-action" data-toggle="list" value="7">
+          回款
+          <span id="badge_statistic_stage_7" class="badge badge-primary badge-pill"></span>
+        </li>
+        <li class="list-group-item list-group-item-action" data-toggle="list" value="8">
+          完成
+          <span id="badge_statistic_stage_8" class="badge badge-primary badge-pill"></span>
+        </li>
+        <li class="list-group-item list-group-item-action" data-toggle="list" value="-1">
+          不合适
+          <span id="badge_statistic_stage_9" class="badge badge-primary badge-pill"></span>
+        </li>
+      </div>
+      <!-- Global Filter -->
+
+      <?-- Filter -->
+      <div class="card">
+        <div class="card-header" id="headingTwo">
+              岗位要求设置
+        </div>
+
+        <div class="card-body" style="padding: 0.5rem;">
+          <div class="row">
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon1" style="width:70px">最低学历</span>
+              </div>
+              <select class="form-control" id="degree_id_min" name="degree_id_min" aria-labelledby="basic-addon1">
+                <option>不限</option>
+                <option>初中</option>
+                <option>高中</option>
+                <option>大专</option>
+                <option>本科</option>
+                <option>硕士</option>
+                <option>博士</option>
+              </select>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2">最小年龄</span>
+              </div>
+              <input type="text" class="form-control" name="age_id_min" id="age_id_min" placeholder="最低年龄" value=""></input>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2" style="width:90px">毕业区间Start</span>
+              </div>
+              <select class="form-control" id="graduate_time_start" name="graduate_time_start" aria-labelledby="basic-addon2">
+                <option>不限</option>
+                <option>2000</option>
+                <option>2001</option>
+                <option>2002</option>
+                <option>2003</option>
+                <option>2004</option>
+                <option>2005</option>
+                <option>2006</option>
+                <option>2007</option>
+                <option>2008</option>
+                <option>2009</option>
+                <option>2010</option>
+                <option>2011</option>
+                <option>2012</option>
+                <option>2013</option>
+                <option>2014</option>
+                <option>2015</option>
+                <option>2016</option>
+                <option>2017</option>
+                <option>2018</option>
+                <option>2019</option>
+              </select>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">工作地点.省</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_province" id="working_place_province" placeholder="省" value=""></input>
+            </div>
+
+          </div>
+
+          <div class="row">
+
+           <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2" style="width:70px">最高学历</span>
+              </div>
+              <select class="form-control" id="degree_id_max" name="degree_id_max" aria-labelledby="basic-addon2">
+                <option>不限</option>
+                <option>初中</option>
+                <option>高中</option>
+                <option>大专</option>
+                <option>本科</option>
+                <option>硕士</option>
+                <option>博士</option>
+              </select>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon4">最大年龄</span>
+              </div>
+              <input type="text" class="form-control" name="age_id_max" id="age_id_max" placeholder="最高年龄" value=""></input>
+            </div>
+
+            <div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon2" style="width:90px">毕业区间.End</span>
+              </div>
+              <select class="form-control" id="graduate_time_end" name="graduate_time_end" aria-labelledby="basic-addon2">
+                <option>不限</option>
+                <option>2000</option>
+                <option>2001</option>
+                <option>2002</option>
+                <option>2003</option>
+                <option>2004</option>
+                <option>2005</option>
+                <option>2006</option>
+                <option>2007</option>
+                <option>2008</option>
+                <option>2009</option>
+                <option>2010</option>
+                <option>2011</option>
+                <option>2012</option>
+                <option>2013</option>
+                <option>2014</option>
+                <option>2015</option>
+                <option>2016</option>
+                <option>2017</option>
+                <option>2018</option>
+                <option>2019</option>
+                <option>2020</option>
+                <!-- TODO: dynamic get this so we won't change here year by year -->
+              </select>
+            </div>
+
+			<div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">工作地点.市</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_city" id="working_place_city" placeholder="市" value=""></input>
+            </div>
+
+          </div>
+		  <div class="row">
+
+			<div class="col-md-3 input-group">
+              <div class="input-group-prepend" >
+                <span class="input-group-text" id="basic-addon2" style="width:70px">性别</span>
+              </div>
+              <select class="form-control" id="gender_id">
+                <option>不限</option>
+                <option>男</option>
+                <option>女</option>
+              </select>
+			</div>
+			<div class="col-md-3 input-group">
+			</div>
+			<div class="col-md-3 input-group">
+			</div>
+			<div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">工作地点.区</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_district" id="working_place_district" placeholder="区" value=""></input>
+            </div>
+		  </div>
+		  <div class="row">
+		  </div>
+        </div>
+      </div>
+      <?-- Filter -->
+
+      <?-- Candidates Other Info -->
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          岗位其他信息
+        </div>
+
+        <div class="card-body" style="padding: 0.5rem;">
+          <div class="row">
+			<div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">公司.街道</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_street" id="working_place_street" placeholder="位置" value=""></input>
+            </div>
+
+			<div class="col-md-3 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">公司.详细地址</span>
+              </div>
+              <input type="text" class="form-control" name="working_place_suite" id="working_place_suite" placeholder="室" value=""></input>
+            </div>
+          </div>
+        </div>
+      </div>
+      <?-- Candidates Other Info -->
+
+      <?-- Candidates -->
+      <div class="card">
+        <div class="card-header" id="headingThree">
+          符合条件的候选人
+        </div>
+        <!--<button type="button" style="width: 160px;height: 60px;background-color: red">生成地图公交路线</button>-->
+        <button onclick="copyText()" style="width: 160px;height: 60px;">生成导航</button>
+        <div id="littleshowid" style="background-color: white">0</div>
+        <div id="l-map" style="display: none"></div>
+        <div id="r-result" style="background-color: yellowgreen;display: none">1111111111</div>
+
+        <div class="card-body">
+          <?-- canidates table-->
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover table-condensed" id="dataTable_resume" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>CK</th>
+                  <th>IID</th>
+                  <th>CID</th>
+                  <th>ID</th>
+                  <th>*Name</th>
+                  <th>Location</th>
+                  <th>Age+G</th>
+                  <th>*Phone</th>
+                  <th>*Email</th>
+                  <th>*Major</th>
+                  <th>WorkExp</th>
+                  <th>LastMod</th>
+                  <th id="table_Status">Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+
+          <?-- End candidates table-->
+
+        </div>
+      </div>
+      <?-- Candidates -->
+    </div>
+  </div>
+
+  <!-- DIAL -->
+  <div class="modal fade" id="aiResult" tabindex="-1" role="dialog" aria-labelledby="aiResult" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="aiResultModalLongTitle">AI机器人对话结果</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form name='ai_result_form' id="ai_result_form">
+
+                <div>项目名称</div>
+                <span id="ai_result_projname"></span>
+
+                <div>聊天时长(秒)</div>
+                <span id="ai_result_duration"></span>
+
+                <div>标签(秒)</div>
+                <span id="ai_result_tag"></span>
+
+                <div>聊天过程</div>
+                <textarea id="ai_result_panel" style="width:96%;height:350px">
+                </textarea>
+
+              </form>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- DIAL -->
+  <div class="modal fade" id="dialModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">AI机器人配置</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form name='ai_config_form' id="ai_config_form">
+
+                <div class="form-group">
+                <span class="label label-default">任务名称</span>
+                <input name="config_ai_task_name" id="config_ai_task_name" class="form-control">
+                </select>
+                </div>
+
+                <div class="form-group">
+                  <span class="label label-default">应聘者</span>
+                  <input type="text" name="ai_candidate_name" class="form-control" id="text_name">
+                </div>
+
+                <div class="form-group">
+                  <span class="label label-default">电话</span>
+                  <input type="text" name="ai_candidate_phone" class="form-control" id="text_phone_number">
+                </div>
+
+              </form>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="dialFormSubmit" class="btn btn-primary">OK</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- DIAL -->
+  <div class="modal fade" id="aiSelectModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">AI结果处理</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+
+        <div class="modal-body" style="padding: 0.5rem">
+          <div class='row'>
+            <div class="col-md-6 input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon_ai_status" style="width:70px">AI状态</span>
+              </div>
+			  <select class="form-control" id="ai_status" name="ai_status" aria-labelledby="basic-addon_ai_status">
+                <option>---</option>
+                <option>A级(较强)</option>
+                <option>B级(一般)</option>
+                <option>C级(很少)</option>
+                <option>未接通AI</option>
+                <option>拒绝</option>
+                <option>主叫号码不可用</option>
+                <option>空号</option>
+                <option>关机</option>
+                <option>占线</option>
+                <option>停机</option>
+                <option>未接</option>
+                <option>主叫欠费</option>
+                <option>呼损</option>
+                <option>黑名单</option>
+              </select>
+            </div> <?--col-md-6-->
+            <div class="col-md-6 input-group">
+			  <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon_ai_status_action" style="width:70px">操作</span>
+              </div>
+			  <select class="form-control" id="ai_status_action" name="ai_status_action" aria-labelledby="basic-addon_ai_status_action">
+                <option>---</option>
+                <option>通过</option>
+                <option>不通过</option>
+              </select>
+            </div>
+		  </div> <?--- row -->
+		  <div class='row' style="margin-top:10px">
+            <div class="col-md-12 input-group">
+              <input name="ai_status_and_action" id="ai_status_and_action" class="form-control">
+			</div>
+          </div>
+        </div> <?-- ....... -->
+
+
+        <div class="modal-footer">
+          <button type="button" id="aiStatusActionSubmit" class="btn btn-primary">OK</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Dial to Candidate -->
+  <?--- Modal-Dialog is the key value for the panel size setting --->
+  <?--  position:relative; width:auto; magin:0.5rem; pointer-events:none; ---->
+
+  {% include 'resumes/call_interview.html' %}
+
+  <!-- Post Info -->
+  <div class="modal fade" id="postModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">岗位信息</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+          <button type="button" id="dailToCandidate" class="btn btn-primary">拨号</button>
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_postinfo_company" placeholder="公司名">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_postinfo_department" placeholder="部门名">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_postinfo_post" placeholder="岗位名称">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_postinfo_description" placeholder="岗位简介">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Resume Info -->
+  <div class="modal fade" id="resumeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">应聘者信息</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_resumeinfo_username" placeholder="姓名">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_resumeinfo_degree" placeholder="学历">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_resumeinfo_school" placeholder="学校">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_resumeinfo_phone_number" placeholder="电话">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Appointment Info -->
+  <div class="modal fade" id="appointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">填写面试信息</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+
+                <div class="form-group">
+                <span class="label label-default">面试日期</span>
+                <div class="input-group date form_datetime" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" id="text_appointment_date" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_appointment_contact" placeholder="联系人">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_appointment_address" placeholder="面试地点">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_appointment_postname" placeholder="面试岗位">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_appointment_certification" placeholder="携带资料">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_appointment_attention" placeholder="注意事项">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_appointment_first_impression" placeholder="第一印象">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_appointment_notes" placeholder="备注">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="sendMessage" class="btn btn-primary">发送面试信息给应聘者</button>
+          <button type="button" id="appointmentSubmit" class="btn btn-primary">进入下一阶段: 面试</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offer Info -->
+  <div class="modal fade" id="offerUpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Offer信息</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_update_offer_resumeinfo_username" placeholder="姓名">
+				</div>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_update_offer_resumeinfo_phone_number" placeholder="电话">
+				</div>
+                <div class="form-group">
+                  <span class="label label-default">入职日期</span>
+                  <div class="input-group date form_datetime" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input1">
+                    <input class="form-control" id="text_update_offerinfo_date" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_update_offerinfo_contact" placeholder="联系人">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_update_offerinfo_contact_phone" placeholder="电话">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_update_offerinfo_address" placeholder="报道地点">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_update_offerinfo_postname" placeholder="岗位名称">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_update_offerinfo_certification" placeholder="携带资料">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_update_offerinfo_salary" placeholder="薪酬福利">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_update_offerinfo_notes" placeholder="备注">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="sendMessageEntry" class="btn btn-primary">发送Offer信息给应聘者</button>
+          <button type="button" id="offerUpdateSubmit" class="btn btn-primary">确定更新</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Offer Info -->
+  <div class="modal fade" id="offerModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Offer信息</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_offer_resumeinfo_username" placeholder="姓名">
+				</div>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_offer_resumeinfo_phone_number" placeholder="电话">
+				</div>
+                <div class="form-group">
+                  <span class="label label-default">入职日期</span>
+                  <div class="input-group date form_datetime" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input1">
+                    <input class="form-control" id="text_offerinfo_date" size="16" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_offerinfo_contact" placeholder="联系人">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_offerinfo_contact_phone" placeholder="电话">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_offerinfo_address" placeholder="报道地点">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_offerinfo_postname" placeholder="岗位名称">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_offerinfo_certification" placeholder="携带资料">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_offerinfo_salary" placeholder="薪酬福利">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_offerinfo_notes" placeholder="备注">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="sendMessageEntry" class="btn btn-primary">发送Offer信息给应聘者</button>
+          <button type="button" id="offerSubmit" class="btn btn-primary">进入下一阶段: 入职</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- entry update -->
+  <div class="modal fade" id="entryUpdateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">更新入职信息</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_entry_update_resumeinfo_username" placeholder="姓名">
+				</div>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_entry_update_resumeinfo_phone_number" placeholder="电话">
+				</div>
+                <div class="form-group">
+                  <span class="label label-default">入职时间</span>
+                  <div class="input-group date form_datetime" data-date-format="yyyy-mm-dd hh:ii" data-link-field="dtp_input1">
+                    <input class="form-control" size="16" id="text_entryupdate_date" type="text" value="" readonly>
+                    <span class="input-group-addon"><span class="glyphicon glyphicon-th"></span></span>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_entryupdate_contact" placeholder="联系人">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_entryupdate_contact_phone" placeholder="电话">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_entryupdate_address" placeholder="报道地点">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_entryupdate_postname" placeholder="岗位名称">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_entryupdate_certification" placeholder="携带资料">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_entryupdate_salary" placeholder="薪酬福利">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_entryupdate_notes" placeholder="备注">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="sendMessageEntry2" class="btn btn-primary">发送Offer信息给应聘者</button>
+          <button type="button" id="entryUpdateSubmit" class="btn btn-primary">确定更改入职信息</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- entryed Info -->
+  <div class="modal fade" id="entryedModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">入职信息确认</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+		<form>
+		  <div class="form-group">
+			<input type="text" class="form-control" id="text_entry_resumeinfo_username" placeholder="姓名">
+		  </div>
+		  <div class="form-group">
+			<input type="text" class="form-control" id="text_entry_resumeinfo_phone_number" placeholder="电话">
+		  </div>
+		</form>
+        <div class="modal-footer">
+          <button type="button" id="entryedSubmit" class="btn btn-primary">已经入职，进入考察期</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Probation Info -->
+  <div class="modal fade" id="probationSuccModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">通过考察期</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+		<form>
+		  <div class="form-group">
+			<input type="text" class="form-control" id="text_probation_resumeinfo_username" placeholder="姓名">
+		  </div>
+		  <div class="form-group">
+			<input type="text" class="form-control" id="text_probation_resumeinfo_phone_number" placeholder="电话">
+		  </div>
+		</form>
+        <div class="modal-footer">
+          <button type="button" id="probationSuccSubmit" class="btn btn-primary">进入下一阶段: 回款</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Probation Fail Info -->
+  <div class="modal fade" id="probationFailModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">未通过考察期</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="text_probation_reason" placeholder="未通过原因">
+        </div>
+        <div class="form-group">
+            <input type="text" class="form-control" id="text_probation_comments" placeholder="评价">
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="probationFailSubmit" class="btn btn-primary">确认</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Interview Result -->
+  <div class="modal fade" id="interviewResultModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">面试结论:请填写面试评价</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_interview_resumeinfo_username" placeholder="姓名">
+				</div>
+				<div class="form-group">
+				  <input type="text" class="form-control" id="text_interview_resumeinfo_phone_number" placeholder="电话">
+				</div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_interviewresult_comments" placeholder="面试评价">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="interviewResultFormSubmit" class="btn btn-primary">进入下一阶段: 发放offer</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- PayBack Register Info -->
+  <div class="modal fade" id="pbRegisterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">打款登记</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbregister_amount" placeholder="打款金额">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbregister_pm_amount" placeholder="pm分成">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbregister_invitor_amount" placeholder="邀约人分成">
+                </div>
+
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbregister_img" placeholder="上传截图">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbregister_notes" placeholder="备注">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="pbRegisterSubmit" class="btn btn-primary">确定</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PayBack Finish Info -->
+  <div class="modal fade" id="pbFinishModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">打款完成</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbfinish_notes" placeholder="备注">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="pbFinishSubmit" class="btn btn-primary">完成打款, 整个面试过程结束</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PayBack Baddebt Info -->
+  <div class="modal fade" id="pbBaddebtModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">坏账</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbbaddebt_notes" placeholder="备注">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="pbBaddebtSubmit" class="btn btn-primary">确定</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PayBack Invoice Info -->
+  <div class="modal fade" id="pbInvoiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">发票信息</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <?--Show candidate informations here.-->
+
+          <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="agree" role="tabpanel" aria-labelledby="agree-tab">
+              <form>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbinvoice_companyname" placeholder="公司名称">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbinvoice_idn" placeholder="识别号">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbinvoice_address" placeholder="地址">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbinvoice_hone" placeholder="联系方式">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbinvoice_bank" placeholder="银行">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbinvoice_cardid" placeholder="卡号">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbinvoice_amount" placeholder="金额">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbinvoice_mail_address" placeholder="寄票地址">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbinvoice_contact" placeholder="联系人">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control" id="text_pbinvoice_contact_phone" placeholder="联系电话">
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="pbInvoiceSubmit" class="btn btn-primary">确定</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Terminate -->
+  <div class="modal fade" id="stopModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h6 class="modal-title" id="exampleModalLongTitle">面试终止(请如实填写以下问题)</h6>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" id="basic-tab" href="#basic" data-toggle="tab" role="tab" aria-controls="basic" aria-selected="true">基本</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="industry-tab" href="#industry" data-toggle="tab" role="tab" aria-controls="industry" aria-selected="false">行业</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="shift-tab" href="#tab_shift" data-toggle="tab" role="tab" aria-controls="tab_shift" aria-selected="false">作息</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="salary-tab" href="#salary" data-toggle="tab" role="tab" aria-controls="salary" aria-selected="false">薪资</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="insurance-tab" href="#insurance" data-toggle="tab" role="tab" aria-controls="insurance" aria-selected="false">社保</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="post-tab" href="#tab_post" data-toggle="tab" role="tab" aria-controls="tab_post" aria-selected="false">岗位</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="position-tab" href="#position" data-toggle="tab" role="tab" aria-controls="position" aria-selected="false">工作地</a></li>
+            <li class="nav-item">
+              <a class="nav-link" id="other-tab" href="#other" data-toggle="tab" role="tab" aria-controls="other" aria-selected="false">其他</a></li>
+          </ul>
+
+          <div class="tab-content" id="myTabContent">
+
+            <div class="tab-pane fade show active" id="basic" role="tabpanel" aria-labelledby="basic-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expected_industry" class="col-form-label">当前找工作状态</label>
+
+                  <select class="form-control" id="text_terminate_hunting_status">
+                    <option value=-1></option>
+                    <option value=0>在职,不找工作</option>
+                    <option value=1>在职,考虑新机会</option>
+                    <option value=2>离职,正在找工作</option>
+                  </select>
+
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade show " id="industry" role="tabpanel" aria-labelledby="industry-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expected_industry" class="col-form-label">选择期望行业</label>
+
+                  <select class="form-control" id="text_terminate_expected_industry">
+                    <option></option>
+                    <option>计算机软件</option>
+                    <option>通信</option>
+                    <option>建筑</option>
+                    <option>房地产</option>
+                    <option>家居装修</option>
+                  </select>
+
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="tab_post", role="tabpanel" aria-labelledby="post-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expected_post" class="col-form-label">选择期望岗位</label>
+                  <select class="form-control" id="text_terminate_expected_post">
+                    <option></option>
+                    <option>普通员工</option>
+                    <option>项目经理</option>
+                    <option>总监</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="tab_shift", role="tabpanel" aria-labelledby="shift-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expected_shift" class="col-form-label">期望作息时间</label>
+                  <select class="form-control" id="text_terminate_expected_shift">
+                    <option></option>
+                    <option>做五休二</option>
+                    <option>单双休</option>
+                    <option>单休</option>
+                    <option>无休</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="salary", role="tabpanel" aria-labelledby="salary-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expected_salary" class="col-form-label">期望薪水(元/月)</label>
+                  <textarea class="form-control" id="text_terminate_expected_salary"></textarea>
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="other", role="tabpanel" aria-labelledby="other-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expected_other" class="col-form-label">其他说明</label>
+                  <textarea class="form-control" id="text_terminate_expected_notes"></textarea>
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="position", role="tabpanel" aria-labelledby="position-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expected_place_province" class="col-form-label">期望工作地.省</label>
+                  <input type="text" class="form-control" name="text_expected_place_province" id="text_terminate_expected_province" value="">
+                </div>
+                <div class="form-group">
+                  <label for="text_expected_place_city" class="col-form-label">期望工作地.市</label>
+                  <input type="text" class="form-control" name="text_expected_place_city" id="text_terminate_expected_city" value="">
+                </div>
+                <div class="form-group">
+                  <label for="text_expected_place_district" class="col-form-label">期望工作地.区/县</label>
+                  <input type="text" class="form-control" name="text_expected_place_district" id="text_terminate_expected_district" value="">
+                </div>
+              </form>
+            </div>
+
+            <div class="tab-pane fade" id="insurance", role="tabpanel" aria-labelledby="insurance-tab">
+              <form>
+                <div class="form-group">
+                  <label for="text_expected_insurance" class="col-form-label">期望社保购买地</label>
+                  <select class="form-control" id="text_terminate_expected_insurance">
+                    <option></option>
+                    <option>本地最低</option>
+                    <option>本地实缴</option>
+                    <option>外地最低</option>
+                    <option>外地实缴</option>
+                    <option>不购买</option>
+                  </select>
+                  <label for="text_expected_insurance" class="col-form-label">期望社保购买时间</label>
+                  <select class="form-control" id="text_terminate_expected_insurance_schedule">
+                    <option></option>
+                    <option>转正购买</option>
+                    <option>入职购买</option>
+                    <option>不购买</option>
+                  </select>
+                </div>
+              </form>
+            </div>
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="jobFoundSubmit" class="btn btn-primary">已经找到工作</button>
+          <button type="button" id="stopFormSubmit" class="btn btn-primary">结束面试</button>
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NEXT -->
+  <div class="modal fade" id="nextModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <h5 class="modal-title" id="exampleModalLongTitle">确定进入下个面试阶段</h5>
+        <button type="button" id="nextSubmit" class="btn btn-primary">OK</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+ var t_resume_statistic_url = "{% url 'app_manager:t_resume_statistic' 1 %}";
+ var t_resume_detail_url = "{% url 'app_manager:t_resume' 1 %}";
+</script>
+<script src="{% static 'resumes/js/table_multi.js' %}"></script>
+<!-- <script src="{% static 'resumes/js/resume_edit.js' %}"></script> -->
+<script type="text/javascript">
+    $('.form_datetime').datetimepicker({
+        //language:  'fr',
+        weekStart: 1,
+        todayBtn:  1,
+        autoclose: 1,
+        todayHighlight: 1,
+        startView: 2,
+        forceParse: 0,
+        initialDate:new Date(),
+        orientation:'bottom',
+        showMeridian: 1
+    });
+</script>
+<script type="text/javascript">
+ $(function () {
+   $('select[multiple].active').multiselect();
+
+ });
+ var G_gsopend = {lng:0,lat:0};
+ var G_perple = [];
+ var G_numi = 1;
+
+
+ var map = new BMap.Map("l-map");
+ map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+ map.enableScrollWheelZoom();
+ var p1 = new BMap.Point(116.301934, 39.977552);
+ var p2 = new BMap.Point(116.508328, 39.919141);
+ var transit = new BMap.TransitRoute(map, {
+   renderOptions: {map: map, panel: "r-result"}
+ });
+ transit.search(p1, p2);
+
+ function wordgjTwice(sendbbbName,outi){
+
+   var map = new BMap.Map("l-map");
+   map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+   map.enableScrollWheelZoom();
+
+   map.clearOverlays();
+
+   function myFun(){
+     var poi = local.getResults().getPoi(0);
+     var msgid = "aaadiv" + outi;
+     if(typeof poi == "undefined" || poi == null || poi == ""){
+       var msg = "行ID为--"+outi+"--地址为["+sendbbbName+"]:简历的地址百度未检索到,此行不生成导航!(poi)";
+       document.getElementById(msgid).innerHTML = msg;
+       alert("行ID为--"+outi+"--地址为["+sendbbbName+"]:简历的地址百度未检索到,此行不生成导航!(poi)");
+       return;
+     }
+
+     var pp = local.getResults().getPoi(0).point;
+     if(typeof pp == "undefined" || pp == null || pp == ""){
+       alert("行ID为--"+outi+"--地址为["+sendbbbName+"]:简历的地址百度未检索到,此行不生成导航!(pp)");
+       return;
+     }
+     map.centerAndZoom(pp, 18);
+     map.addOverlay(new BMap.Marker(pp));
+     var cIdName = "aaadiv" + outi;
+     var transit = new BMap.TransitRoute(map, {
+       renderOptions: {map: map, panel: cIdName},
+       pageCapacity:1
+     });
+
+     var slng = G_gsopend.lng;
+     var slat = G_gsopend.lat;
+     var gspoint=new BMap.Point(slng, slat);
+     var elng = pp.lng;
+     var elat = pp.lat;
+     var gspointend=new BMap.Point(elng, elat);
+     G_numi++;
+     transit.search(gspoint, gspointend);
+   }
+   var local = new BMap.LocalSearch(map, {
+     onSearchComplete: myFun
+   });
+   local.search(sendbbbName);
+ };
+ function wordgjFirst(sendaaaName,fbbbName,outi){
+   var map = new BMap.Map("l-map");
+   map.centerAndZoom(new BMap.Point(116.404, 39.915), 12);
+   map.enableScrollWheelZoom();
+
+   map.clearOverlays();
+
+   function myFun(){
+     var poi = local.getResults().getPoi(0);
+     if(typeof poi == "undefined" || poi == null || poi == ""){
+       alert("百度未检索到起点(poi):请输入规范的--公司.街道与公司.详细地址!");
+       return;
+     }
+     var pp = local.getResults().getPoi(0).point;
+     if(typeof pp == "undefined" || pp == null || pp == ""){
+       alert("百度未检索到起点(pp):请输入规范的--公司.街道与公司.详细地址!");
+       return;
+     }
+
+     G_gsopend.lng=pp.lng;
+     G_gsopend.lat=pp.lat;
+     map.centerAndZoom(pp, 18);
+     map.addOverlay(new BMap.Marker(pp));
+
+     wordgjTwice(fbbbName,outi);
+   }
+   var local = new BMap.LocalSearch(map, {
+     onSearchComplete: myFun
+   });
+   local.search(sendaaaName);
+ };
+
+</script>
+
+<style>
+  .trans-plan-content{
+    background-color: red !important;
+    display: none !important;
+  }
+    .trans_plan_desc{
+        background-color: red !important;
+        display: none !important;
+    }
+</style>
+
+
+{% endblock%}

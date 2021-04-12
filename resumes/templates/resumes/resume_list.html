@@ -1,0 +1,99 @@
+{% extends "recruit_manager/table_basic.html" %}
+{% load static %}
+{% block content %}
+
+<div class="text-primary" id="text_company_name"> Select Post </div>
+
+{{ post_datatable }}
+
+<HR style="border:3 double #987cb9" width="90%" color=#987cb9 SIZE=3>
+
+{{ datatable }}
+
+{% endblock %}
+
+{% block extra_js %}
+
+<!-- Page level plugins -->
+<!-- Page level custom scripts -->
+<script type="text/javascript" charset="utf8" src="{% static 'recruit_manager/vendor/jquery/jquery-3.3.1.min.js' %}"></script>
+<script type="text/javascript" charset="utf8" src="{% static 'recruit_manager/vendor/datatables/jquery.dataTables.min.js' %}"></script>
+
+<script type="text/javascript" charset="utf8" src="{% static 'recruit_manager/js/datatableview.js' %}"></script>
+
+<script type="text/javascript">
+ datatableview.auto_initialize = false;
+ var resume_selected = [];
+ var post_selected = false;
+ var post_selected_value = 0;
+
+ $(function() {
+   var resume_options = {
+     "rowCallback": function(row, data) {
+
+       if ($.inArray(data.DT_RowId.toString(), resume_selected) !== -1 ) {
+         $(row).addClass('selected');
+       }
+     },
+
+   };
+
+   var post_options = {
+     "lengthChange": false,
+     "pageLength" : 5,
+
+     "rowCallback": function(row, data) {
+
+       if ((post_selected === true) && (data.DT_RowId == post_selected_value)) {
+         $(row).addClass('selected');
+       }
+     },
+   };
+   var common_options = [post_options, resume_options];
+   datatableview.initialize($('.datatable'), common_options);
+ });
+
+ $(document).ready(function() {
+   // resume table
+   $('#DataTables_Table_1 tbody').on('click', 'tr', function() {
+     var id = this.id;
+     var index = $.inArray(id, resume_selected);
+
+     if ( index === -1 ) {
+       resume_selected.push(id);
+     } else {
+       resume_selected.splice(index, 1);
+     }
+
+     $(this).toggleClass('selected');
+   });
+
+   // post table
+   $('#DataTables_Table_0 tbody').on('click', 'tr', function() {
+     var id = this.id;
+
+     if (id === post_selected_value && post_selected === true) {
+       $(this).toggleClass('selected');
+       console.log(id + " off");
+       post_selected = false;
+     } else {
+       $(this).toggleClass('selected');
+       console.log(id + " on");
+       console.log($(this));
+
+       if (post_selected === true) {
+         $('tr#' + post_selected_value).toggleClass('selected');
+       }
+       post_selected = true;
+       post_selected_value = id;
+
+       var tr = document.getElementById(id);
+       document.getElementById("text_company_name").innerHTML = tr.innerText;
+     }
+   });
+
+ });
+
+</script>
+
+{% endblock%}

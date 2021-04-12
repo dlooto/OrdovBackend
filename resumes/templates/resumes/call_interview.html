@@ -1,0 +1,160 @@
+  <div class="modal fade" tabindex="-1" id="dailToCandidateModal" role="dialog" aria-labelledby="callInterviewPanel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" style="width:2000px">
+      <div class="modal-content">
+
+        <div class="modal-header">
+          <h5 class="modal-title">项目VS候选人</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+
+        <div class="modal-body">
+
+          <?--------------------------------------------------------------->
+          <div class="tab-content" id="myTabContent">
+            <div class="container">
+            <div class="row">
+            <div class="col-2" id="post" role="tabpanel" aria-labelledby="post-tab">
+              <h6 style="color:#e1a523;">个人基本信息</h6>
+              <form>
+                <div class="form-group"><input type="text" class="form-control" id="candidate_text_resumeinfo_username" placeholder="姓名"></div>
+                <div class="form-group"><input type="text" class="form-control" id="candidate_text_resumeinfo_degree" placeholder="学历"></div>
+                <div class="form-group"><input type="text" class="form-control" id="candidate_text_resumeinfo_school" placeholder="学校"></div>
+                <div class="form-group"><input type="text" class="form-control" id="candidate_text_resumeinfo_phone_number" placeholder="电话"></div>
+              </form>
+              <h6 style="color:#e1a523;">企业基本信息</h6> 
+              <form>
+                <div class="form-group"><input type="text" class="form-control" id="text_postinfo_company" placeholder="公司名"></div>
+                <div class="form-group"><input type="text" class="form-control" id="text_postinfo_department" placeholder="部门名"></div>
+                <div class="form-group"><input type="text" class="form-control" id="text_postinfo_post" placeholder="岗位名称"></div>
+                <div class="form-group"><input type="text" class="form-control" id="text_postinfo_description" placeholder="岗位简介"></div>
+              </form>
+            </div> <?--- the left part-->
+            <div class="col-3">
+              <h6 style="color:#5323e1;">沟通思路</h6> 
+                  <textarea class="form-control" id="dail_text_terminate_expected_notes" style="height:400px;"></textarea>
+            </div>
+            <div class="col-7">
+              <h6 style="color:#5323e1;">智能招聘</h6>
+              将从以下几个方面丰富候选人的画像信息
+              <form>
+                <?----item1--->
+                <div>
+                <label for="dail_text_cur_hunting_status">当前找工作状态</label>
+                <select id="dail_text_cur_hunting_status">
+                    <option value=-1></option><option value=0>在职,不找工作</option>
+                    <option value=1>在职,考虑新机会</option><option value=2>离职,正在找工作</option>
+                </select>
+                </div>
+
+                <?-----item2---->
+                <div id="smartAreaType">
+                  <div>
+                  <div id="prefixAreaType" style="color:#e14c23;">
+                  </div>
+									<label for="contactChoice1">满意</label>
+									<input type="radio" id="areaTypeOK"
+										name="areaTypeOK" value="ok" checked>
+
+									<label for="contactChoice2">不满意</label>
+									<input type="radio" id="areaTypeNO"
+										name="areaTypeNO" value="no">
+                  </div>
+
+								  <div id="smartAreaTypeSelector" style="display:none">
+									对行业类型不满意，请选择期望的工作领域
+                  <select id="dail_expected_areaType">
+                    <option>--</option><option>计算机软件</option><option>通信</option>
+                    <option>建筑</option><option>房地产</option><option>家居装修</option>
+                  </select>
+									</div>
+                </div>
+
+                <?-----item3---->
+                <div id="smartPostLevel">
+                  <div id="prefixPostLevel" style="color:#e14c23;">
+                  </div>
+									<label for="contactChoice1">满意</label>
+									<input type="radio" id="postLevelOK"
+										name="postLevelOK" value="ok" on_click="updateStaticInfo(postLevel, true)" checked>
+
+									<label for="contactChoice2">不满意</label>
+									<input type="radio" id="postLevelNO"
+										name="postLevelNO" value="no">
+
+									<div id="smartPostLevelSelector">
+									对岗位级别不满意，选择期望的岗位类型
+                  <select id="dail_text_expected_post">
+                    <option></option><option>普通员工</option><option>项目经理</option><option>总监</option>
+                  </select>
+									</div>
+                </div>
+
+                <?------item4------>
+                <div id="smartPostLobbyType">
+                  <div id="prefixPostLobbyType" style="color:#e14c23;">
+                  </div>
+									<label for="contactChoice1">满意</label>
+									<input type="radio" id="postLobbyTypeOK"
+										name="postLobbyTypeOK" value="ok" checked>
+
+									<label for="contactChoice2">不满意</label>
+									<input type="radio" id="postLobbyTypeNO"
+										name="postLobbyTypeNO" value="no">
+
+									<div id="postLobbyTypeSelector">
+									对作息时间不满意，请选择期望的类型
+                  <select id="dail_text_expected_shift">
+                    <option></option><option>做五休二</option><option>单双休</option><option>单休</option><option>无休</option>
+                  </select>
+									</div>
+                </div>
+
+                <?-------item----->
+                <div id="socialSecurity"> 
+                  <div id="prefixSocialSecurity" style="color:#e14c23;">
+                  </div>
+									<label for="contactChoice1">满意</label>
+									<input type="radio" id="socialSecurityOK"
+										name="socialSecurityOK" value="ok" checked>
+
+									<label for="contactChoice2">不满意</label>
+									<input type="radio" id="socialSecurityNO"
+										name="socialSecurityNO" value="no">
+
+									<div id="socialSecuritySelector">
+									对作息时间不满意，请选择期望的作息时间
+                  <select id="dail_text_expected_shift">
+                    <option></option><option>做五休二</option><option>单双休</option><option>单休</option><option>无休</option>
+                  </select>
+									</div>
+                </div>
+
+                <?-- show Info -->
+                <div>
+                  <h6 style="color:#5323e1;">个人标签信息</h6>
+                  <div id="candidateSmartShowInfo">
+                  </div>
+                </div>
+
+              </form>
+
+            </div>
+            </div> <?--- row --->
+            </div>
+          </div>
+          <?--------------------------------------------------------------->
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="close_dail_content" class="btn btn-default">Close</button>
+          <button type="button" id="save_dail_content" class="btn btn-default">保存</button>
+          <button type="button" id="dail_deeper_communicate" class="btn btn-default">深度沟通</button>
+          <button type="button" id="dail_not_linked" class="btn btn-default">未接通</button>
+          <button type="button" id="dail_candidate" class="btn btn-default"> 拨号</button>
+          <button type="button" id="agree_interview" class="btn btn-default">同意面试</button>
+          <button type="button" id="giveup_interview" class="btn btn-default">放弃面试</button>
+        </div>
+      </div>
+    </div>
+  </div>

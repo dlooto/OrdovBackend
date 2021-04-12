@@ -1,0 +1,104 @@
+{% extends "recruit_manager/table_basic.html" %}
+{% load static %}
+{% block content %}
+<div class="table-responsive">
+  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+    <thead>
+      <tr>
+        <th>IPK</th>
+        <th>RPK</th>
+        <th>*Resume</th>
+        <th>*Post</th>
+        <th>Active</th>
+        <th>Status</th>
+        <th>Status</th>
+        <th>Action</th>
+        <th>Linked</th>
+      </tr>
+    </thead>
+  </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+ $(document).ready(function() {
+   var table = $('#dataTable').DataTable({
+     "processing": true,
+     "serverSide": true,
+     "order": [[ 0, "desc" ]],
+
+     "ajax": {
+       "url": "/api/interviews/",
+       "type": "GET",
+     },
+
+     "columns": [
+       {"data": "id"},
+       {"data": "resume_pk",
+        "visible": false},
+       {"data": "resume"},
+       {"data": "post"},
+       {"data": "is_active"},
+       {"data": "status_name"},
+       {"data": "status",
+        "visible": false},
+       {"data": null,
+        render: function(data, type, row, meta) {
+          if (row.status == 6) {
+            return "\
+  <button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
+    <span class=\"icon text-white-50\">\
+      <i class=\"fas fa-check\"></i></span>\
+    <span class=\"text\">Finished</span>\
+  </button>";
+          }
+
+          var url="{% url 'app_manager:t_interview_api' 1234 2345 %}".replace(/1234/, row.resume_pk).replace(/2345/, row.id);
+
+          var title="Interview";
+          if (row.status == 5)
+            title = "OFFER";
+          var str = "\
+  <form action=" + url + " method='GET'>\
+    <button class=\"btn btn-info btn-icon-split border-0\" id=\"stage\">\
+      <span class=\"icon text-white-50\">\
+        <i class=\"fas fa-arrow-right\"></i></span>\
+      <span class=\"text\">" + title + "</span>\
+    </button>\
+  </form>";
+          return str;
+        }
+       },
+       {
+         "data": null,
+         render: function(data, type, row, meta) {
+           if (row.linked_candidate == null) {
+             console.log(row.linked_candidate);
+             var url='{% url 'app_manager:t_invitation_api' 1234 %}'.replace(/1234/, row.resume_pk);
+             var str = "\
+  <form action=" + url + " method='GET'>\
+    <button class=\"btn btn-primary btn-icon-split border-0\" id=\"stage\">\
+      <span class=\"icon text-white-50\">\
+        <i class=\"fas fa-info-circle\"></i></span>\
+      <span class=\"text\">Invitation</span>\
+    </button>\
+  </form>";
+             return str;
+           } else {
+             console.log(row.linked_candidate);
+             var str = "\
+    <button class=\"btn btn-success btn-icon-split border-0\" id=\"stage\">\
+      <span class=\"icon text-white-50\">\
+        <i class=\"fas fa-check\"></i></span>\
+      <span class=\"text\">Linked: " + row.linked_candidate + "</span>\
+    </button>";
+             return str;
+           }
+         }
+       },
+     ],
+   });
+ });
+</script>
+{% endblock%}

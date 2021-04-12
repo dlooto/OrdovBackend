@@ -1,0 +1,28 @@
+<div class="layui-card">
+  <div class="layui-card-header">目前环节：同意面试 19年3月28日 下午两点</div>
+  <div class="layui-card-header">沟通思路</div>
+  <div class="layui-card-body layui-row layui-col-space10">
+    <ul class="layui-timeline">
+      <li class="layui-timeline-item">
+        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+        <div class="layui-timeline-content layui-text">
+          <h3 class="layui-timeline-title">2019-03-30</h3>
+            <p>修改 x_admin_show 弹出窗口实现最大化，默认窗口非最大化，如果需要弹出窗口最大化，在最后一个参数传 true <br>
+               修复x_admin_add_to_tab 函数bug，在多个页面切换过程的报错。<br>
+               x_admin_show(title,url,w,h,full=false)
+             </p>
+        </div>
+      </li>
+      <li class="layui-timeline-item">
+        <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+          <div class="layui-timeline-content layui-text">
+            <h3 class="layui-timeline-title">2019-03-19</h3>
+            <p>增加非菜单打开tab函数 x_admin_add_to_tab(title,url,is_refresh) titel为tab标题,url为打开页面地址,is_refresh 可选参数，重复点击是否刷新，默认为false不刷新,true为重复点击刷新页面<br>
+                用法:<br>
+                index.html 中直接 x_admin_add_to_tab('在tab打开','http://www.baidu.com',true)<br>
+                iframe页面中  用 parent.x_admin_add_to_tab('在tab打开','http://www.163.com',true)</p>
+          </div>
+      </li>
+    </ul>
+  </div>
+</div>

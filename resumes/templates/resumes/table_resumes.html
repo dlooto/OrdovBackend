@@ -1,0 +1,271 @@
+{% extends "recruit_manager/table_basic.html" %}
+{% load static %}
+{% block content %}
+
+<div class="panel-group" id="accordion">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion"
+         href="#collapseRequest">
+      </a>
+    </h4>
+  </div>
+
+  <div class="panel panel-success">
+    <?-- tempPlate For a collapse -->
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion"
+             href="#collapseCandidates">
+            所有简历信息
+          </a>
+        </h4>
+      </div>
+      <div id="collapseCandidates" class="panel-collapse collapse">
+        <div class="panel-body">
+
+          <?--Logic for table show-->
+          <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+              <thead>
+                <tr>
+                  <th>CK</th>
+                  <th>CID</th>
+                  <th>ID</th>
+                  <th>*Name</th>
+                  <th>Gender</th>
+                  <th>Age</th>
+                  <th>*Phone</th>
+                  <th>*Email</th>
+                  <th>*School</th>
+                  <th>Degree</th>
+                  <th>*Major</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <?--End logic for table show-->
+
+        </div>
+      </div>
+    </div>
+    <?-- table filter -->
+    <?-- Basic -->
+  </div>
+</div>
+
+  <style type="text/css">
+	.modal-content {
+	}
+  </style>
+  <div class="modal fade " id="resumeSimplified" tabindex="-1" aria-labelled="resumeSimplified" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+		  <div class=".container">
+
+			<div class="row">
+			  <div class="col-md-4 font-weight-bold mb-1">
+				<h3>***</h3>
+			  </div>
+			  <div class="col-md-8 font-weight-bold mb-1">
+				<div class=".container">
+				  <div class="row">
+					<div class="col-md-12">
+					  <h6> *** </h6>
+					</div>
+				  </div>
+				  <div class="row">
+					<div class="col-md-12">
+					  <h6> honpey@gmail.com </h6>
+					</div>
+				  </div>
+				</div>
+			  </div>
+			</div> <?-- row --->
+
+            <div id="experience">
+            </div>
+            <div id="education">
+            </div>
+		  </div> <?-- container -->
+        </div> <?-- modal-body -->
+
+      </div>
+    </div>
+  </div>
+
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+  $(function () { $('#collapseCandidates').collapse('show')});
+  var selected = [];
+
+  var table = $('#dataTable').DataTable({
+    "processing": true,
+    "serverSide": true,
+
+    "ajax": {
+      "url": "/api/resumes/",
+      "type": "GET",
+	  "error": function(jqXHR, textStatus, errorThrown) {
+            console.log(jqXHR.responseText);
+            console.log(jqXHR.status);
+            console.log(jqXHR.readyState);
+            console.log(jqXHR.statusText);
+            console.log(textStatus);
+            console.log(errorThrown);
+			alert("Sorry, 您没有权限遍历所有简历")
+        }
+
+      },
+
+    "columns": [
+      {"data": null,"checkboxes": {},},
+      {"data": "candidate_id","visible": false},
+      {
+        "data": "id",
+        render: function(data, type, row, meta) {
+            return '<a class="nav-link" href={% url 'app_manager:t_resume' 1234 %}> 1234 </a>'.replace(/1234/g, row.id);
+        }
+      },
+      {"data": "username"},
+      {"data": "gender"},
+      {"data": "age"},
+      {"data": "phone_number"},
+      {"data": "email"},
+      {"data": "school"},
+      {"data": "degree"},
+      {"data": "major"},
+    ],
+  });
+
+  /*
+  $('#dataTable tbody').on('dblclick', 'tr', function() {
+    var id = this.id
+    $('#resumeSimplified').modal('toggle')
+  });
+  */
+  function format(d) {
+    var data = format_inner(d)
+	var sData = JSON.parse(data)
+    return '<div class=".container">'+
+        '<div class="row">'+
+          '<div class="col-md-2">'+
+		  '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+sData.birthorigin+'</span>'+
+		  '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+sData.phone_number+'</span>'+
+		  '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+sData.graduate_time+'</span>'+
+		  '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+sData.expected_province+'</span>'+
+		  '</div>'+
+        '</div>'+
+		'<div class="row">'+
+          '<div class="col-md-2">'+
+		  '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "籍贯:" +'</span>'+
+		  '</div>' +
+		  '<div class="col-md-8">'+
+			'<span>' + sData.workexp + '</span>'+
+	      '</div>'+
+		'</div>'+
+		'<div class="row">'+
+          '<div class="col-md-2">'+
+		  '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "现工作地:" +'</span>'+
+		  '</div>' +
+		  '<div class="col-md-8">'+
+			'<span>' + sData.workexp + '</span>'+
+	      '</div>'+
+		'</div>'+
+		'<div class="row">'+
+          '<div class="col-md-2">'+
+		  '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "期望工作地点:" +'</span>'+
+		  '</div>' +
+		  '<div class="col-md-8">'+
+			'<span>' + sData.workexp + '</span>'+
+	      '</div>'+
+		'</div>'+
+		'<div class="row">'+
+          '<div class="col-md-2">'+
+		  '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "期望岗位类型:" +'</span>'+
+		  '</div>' +
+		  '<div class="col-md-8">'+
+			'<span>' + sData.workexp + '</span>'+
+	      '</div>'+
+		'</div>'+
+		'<div class="row">'+
+          '<div class="col-md-2">'+
+		  '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "期望薪资:" +'</span>'+
+		  '</div>' +
+		  '<div class="col-md-8">'+
+			'<span>' + sData.workexp + '</span>'+
+	      '</div>'+
+		'</div>'+
+		'<div class="row">'+
+          '<div class="col-md-2">'+
+		  '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "最近一份工作经历:" +'</span>'+
+		  '</div>' +
+		  '<div class="col-md-8">'+
+			'<span>' + sData.workexp + '</span>'+
+	      '</div>'+
+		'</div>'+
+		'<div class="row">'+
+          '<div class="col-md-2">'+
+		  '</div>' +
+          '<div class="col-md-2">'+
+            '<span>'+ "最高学历:" +'</span>'+
+		  '</div>' +
+		  '<div class="col-md-8">'+
+			'<span>' + sData.school+ ' ' + sData.major + ' ' + sData.degree +'</span>'+
+	      '</div>'+
+		'</div>'+
+        '</div>';
+  };
+  function format_inner(d) {
+    var resume_id = d.id
+    return $.ajax({
+      url: '/api/resumes/' + resume_id + '/',
+      type: 'GET',
+      data: null,
+      async: false
+    }).responseText;
+  };
+  $('#dataTable tbody').on('click', 'tr', function() {
+    var tr = $(this).closest('tr')
+    var row = table.row(tr)
+    if (row.child.isShown()) {
+       row.child.hide();
+       tr.removeClass('shown')
+    }
+    else {
+       // Open this row
+       row.child(format(row.data())).show();
+       row.child(format(row.data())).show()
+       tr.addClass('shown')
+    }
+  });
+
+});
+</script>
+{% endblock%}

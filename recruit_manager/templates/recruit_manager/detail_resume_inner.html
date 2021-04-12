@@ -1,0 +1,234 @@
+<article class="resume-wrapper text-left ">
+	    <div class="mx-auto text-left bg-white shadow-lg">
+		    <header class="resume-header pt-1 pt-md-0">
+			    <div class="media flex-column flex-md-row">
+				    <img class="mr-3 img-fluid picture mx-auto" src="assets/images/profile.jpg" alt="">
+				    <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0">
+					    <div class="primary-info">
+						    <h1 class="name mt-0 mb-1 text-left">
+                                 {{ resume.username }}
+                                 <a href=/manager/resumes/{{resume.id}}/edit/><i class="fas fa-edit fa-fw"></i></a>
+                            </h1>
+						    <ul class="list-unstyled">
+							    <li class="mb-2"><i class="far fa-envelope fa-fw mr-2" data-fa-transform="grow-3"></i>{{ resume.email }}</li>
+							    <li><i class="fas fa-mobile-alt fa-fw mr-2" data-fa-transform="grow-6"></i>{{ resume.phone_number }}</li>
+						    </ul>
+					    </div><!--//primary-info-->
+					    <div class="secondary-info ml-md-auto mt-2" style="display:none;">
+						    <ul class="resume-social list-unstyled">
+				                <li class="mb-3"><a href="#"><span class="fa-container text-center mr-2"><i class="fab fa-linkedin-in fa-fw"></i></span>linkedin.com/in/stevedoe</a></li>
+				                <li class="mb-3"><a href="#"><span class="fa-container text-center mr-2"><i class="fab fa-github-alt fa-fw"></i></span>github.com/username</a></li>
+				                <li class="mb-3"><a href="#"><span class="fa-container text-center mr-2"><i class="fab fa-codepen fa-fw"></i></span>codepen.io/username/</a></li>
+				                <li><a href="#"><span class="fa-container text-center mr-2"><i class="fas fa-globe"></i></span>yourwebsite.com</a></li>
+						    </ul>
+					    </div><!--//secondary-info-->
+					    
+				    </div><!--//media-body-->
+			    </div><!--//media-->
+		    </header>
+		    <div class="resume-body p-5">
+			    <section class="resume-section summary-section mb-5">
+				    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">基本信息</h2>
+				    <div class="resume-section-content">
+                        <div class="row">
+                          <div class="col-lg-3">
+                            {% if resume.gender == "m" %}
+                               性别:男
+                            {% elif resume.gender == "f" %}
+                               性别:女
+                            {% else %}
+                               性别:未知
+                            {% endif %}
+                          </div>
+                          <div class="col-lg-3">
+                            出生日期: {{ resume.birth_year }}
+                          </div>
+                          <div class="col-lg-3">
+                            籍贯: {{ resume.birth_place }}
+                          </div>
+                          <div class="col-log-3">
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-lg-3">
+                            毕业学校: {{ resume.school }}
+                          </div>
+                          <div class="col-lg-3">
+                            专业: {{ resume.major}} 
+                          </div>
+                          <div class="col-lg-3">
+                            {% if resume.degree == 2 %}
+                                最高学位:初中 
+                            {% elif resume.degree == 3 %}
+                                最高学位:高中 
+                            {% elif resume.degree == 4 %}
+                                最高学位:中专
+                            {% elif resume.degree == 5 %}
+                                最高学位:大专 
+                            {% elif resume.degree == 6 %}
+                                最高学位:本科
+                            {% elif resume.degree == 7 %}
+                                最高学位:硕士 
+                            {% elif resume.degree == 8 %}
+                                最高学位:博士
+                            {% elif resume.degree == 9 %}
+                                最高学位:博士后
+                            {% endif %}
+                          </div>
+                          <div class="col-log-3">
+                            毕业时间: {{ resume.graduate_time }}
+                          </div>
+                        </div>
+				    </div>
+			    </section> <!--//summary-section--> 
+                <section class="resume-section summary-section mb-5">
+				    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">教育经历</h2>
+				    <div class="resume-section-content">
+                        <div class="row">
+                          <div class="resume-company-name col-lg-3">
+                            起始时间
+                          </div>
+                          <div class="resume-company-name col-lg-3">
+                            学校
+                          </div>
+                          <div class="resume-company-name col-lg-3">
+                            专业
+                          </div>
+                          <div class="resume-company-name col-log-3">
+                            学位 
+                          </div>
+                        </div>
+                        <div class="row">
+                           {% for e in education %} 
+                            <div class="col-lg-3">
+                                {{ e.start}} --- {{ e.end }}
+                            </div>
+                            <div class="col-lg-3">
+                                {{ e.school }}
+                            </div>
+                            <div class="col-lg-3">
+                                {{ e.major }}
+                            </div>
+                            <div class="col-log-3">
+                            {% if e.degree == 2 %}
+                                初中 
+                            {% elif e.degree == 3 %}
+                                高中 
+                            {% elif e.degree == 4 %}
+                                中专
+                            {% elif e.degree == 5 %}
+                                大专 
+                            {% elif e.degree == 6 %}
+                                本科
+                            {% elif e.degree == 7 %}
+                                硕士 
+                            {% elif e.degree == 8 %}
+                                博士
+                            {% elif e.degree == 9 %}
+                                博士后
+                            {% endif %}
+                            </div>
+                           {% endfor %}
+                        </div>
+                    </div> <!-- resume-section-content-->
+                </section>
+                <section>
+			    <div class="row">
+				    <div class="col-lg-9">
+					    <section class="resume-section experience-section mb-5">
+						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">工作 & 项目经历</h2>
+						    <div class="resume-section-content">
+							    <div class="resume-timeline1 position-relative">
+                                    {% for exp in experience %}
+								    <article class="resume-timeline-item position-relative pb-5">
+									    
+									    <div class="resume-timeline-item-header mb-2">
+										    <div class="d-flex flex-column flex-md-row">
+										        <h3 class="resume-position-title font-weight-bold mb-1">{{exp.post_name}}</h3>
+										        <div class="resume-company-name ml-auto">{{exp.company_name}}</div>
+										    </div><!--//row-->
+										    <div class="resume-position-time">{{exp.start}}-{{exp.end}}</div>
+									    </div><!--//resume-timeline-item-header-->
+									    <div class="resume-timeline-item-desc">
+										    <p>{{exp.description}}</p>
+										    <h4 class="resume-timeline-item-desc-heading font-weight-bold">工作描述:</h4>
+										    <p>{{exp.duty}}</p>
+										    <h4 class="resume-timeline-item-desc-heading font-weight-bold">技能:</h4>
+										    <ul class="list-inline">
+											    <li class="list-inline-item"><span class="badge badge-primary badge-pill">XX</span></li>
+											    <li class="list-inline-item"><span class="badge badge-primary badge-pill">YY</span></li>
+										    </ul>
+									    </div><!--//resume-timeline-item-desc-->
+
+								    </article><!--//resume-timeline-item-->
+                                    {% endfor %}
+
+									<?-- -->
+                                    {% for proj in project %}
+								    <article class="resume-timeline-item position-relative pb-5">
+									    
+									    <div class="resume-timeline-item-header mb-2">
+										    <div class="d-flex flex-column flex-md-row">
+										        <h3 class="resume-position-title font-weight-bold mb-1">{{proj.name}}</h3>
+										        <div class="resume-company-name ml-auto">{{proj.company_name}}</div>
+										    </div><!--//row-->
+										    <div class="resume-position-time">{{proj.start}}-{{proj.end}}</div>
+									    </div><!--//resume-timeline-item-header-->
+									    <div class="resume-timeline-item-desc">
+										    <p>{{proj.brief}}</p>
+										    <h4 class="resume-timeline-item-desc-heading font-weight-bold">项目描述:</h4>
+										    <p>{{proj.duty}}</p>
+									    </div><!--//resume-timeline-item-desc-->
+
+								    </article><!--//resume-timeline-item-->
+                                    {% endfor %}
+									<?-- -->
+
+							    </div><!--//resume-timeline-->
+						    </div>
+					    </section><!--//experience-section-->
+				    </div>
+				    <div class="col-lg-3" >
+					    <section class="resume-section reference-section mb-5">
+						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">获奖 & 证书</h2>
+						    <div class="resume-section-content">
+							    <ul class="list-unstyled resume-awards-list">
+									{% for cert in certification %}	
+								    <li class="mb-2 pl-4 position-relative">
+								        <i class="resume-award-icon fas fa-trophy position-absolute" data-fa-transform="shrink-2"></i>
+								        <div class="resume-award-name">{{cert.name}}</div>
+								        <div class="resume-award-desc">{{cert.description}}</div>
+								    </li>
+									{% endfor %}
+							    </ul>
+						    </div>
+					    </section><!--//interests-section-->
+					    <section class="resume-section language-section mb-5">
+						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">语种</h2>
+						    <div class="resume-section-content">
+							    <ul class="list-unstyled resume-lang-list">
+									{% for lang in language %}
+								    <li class="mb-2">
+									  <span class="resume-lang-name font-weight-bold">{{lang.name}}</span>
+									  <small class="text-muted font-weight-normal">{{lang.cert}}</small>
+									</li>
+									{% endfor %}
+							    </ul>
+						    </div>
+					    </section><!--//language-section-->
+					    <section class="resume-section interests-section mb-5">
+						    <h2 class="resume-section-title text-uppercase font-weight-bold pb-3 mb-3">兴趣</h2>
+						    <div class="resume-section-content">
+							    <ul class="list-unstyled">
+								    <li class="mb-1">.</li>
+							    </ul>
+						    </div>
+					    </section><!--//interests-section-->
+					    
+				    </div>
+			    </div><!--//row-->
+		    </div><!--//resume-body-->
+		    
+		    
+	    </div>
+    </article>  

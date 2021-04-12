@@ -1,0 +1,67 @@
+<div id="perm" style="border:3px solid white; margin-top:10px; margin-left:3px; margin-right:3px;padding:5px;margin:0px; height=1000px">
+  <div style="display:block; margin:2px;padding:2px;">
+    <?-- Post -->
+    <h5 style="margin:-1;">
+    <button id="text_company_name2" class="btn btn-link" data-toggle="collapse" data-target="#collapsePost" aria-expanded="true" aria-controls="collapsePost" style="display:block;">
+        权限管理:
+    <span id="projPermName"></span>
+    </button>
+    </h5>
+
+    <div class="container" style="border:3px solid white">
+      <div>
+        <span><h6 style="color:#b08c21;"> 设置面试阶段负责人</h6></span>
+      </div>
+
+      <div>
+        <div class="input-group">
+          <div class="">
+            <span class="" id="" style="width:55px">阶段</span>
+          </div>
+          <select class="active" id="interview_stage_id" multiple="multiple" name="stage_stage">
+            <option value=0>待筛选</option>
+            <option value=1>筛选</option>
+            <option value=2>邀约</option>
+            <option value=3>面试</option>
+            <option value=4>Offer</option>
+            <option value=5>入职</option>
+            <option value=6>考察</option>
+            <option value=7>回款</option>
+            <option value=8>完成</option>
+            <option value=-1>不合适</option>
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <div class=" input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="width:55px">责任人</span>
+          </div>
+          <select class="form-control" id="cRecruiter" name="response" aria-labelledby="basic-addon1">
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <div class=" input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1" style="width:55px">操作</span>
+          </div>
+          <select class="form-control" id="permOp" name="permOp" aria-labelledby="basic-addon1">
+            <option></option>
+            <option>增加</option>
+            <option>删除</option>
+          </select>
+        </div>
+      </div>
+    </div> <?-- container -->
+    <div style="border:3px solid white;height:250px;">
+        <span><h6 style="color:#b08c21;">当前的权限信息</h6></span>
+        <textarea id="projPermInfo" style="margin-left:auto; font-size:20px; height:200px"></textarea>
+    </div>
+    <div style="border:3px">
+    </div>
+
+  </div>
+</div>

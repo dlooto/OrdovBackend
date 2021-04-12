@@ -1,0 +1,225 @@
+<!--基本信息Card -->
+<div class="layui-card">
+  <div class="layui-card-header">
+    <div class="layui-col-sm10">基本信息</div>
+    <div class="layui-col-sm2" id="userEditBtn">
+        <button class="layui-btn layui-btn layui-btn-xs">编辑</button>
+    </div>
+    <div class="layui-col-sm2" id="userSaveBtn" hidden>
+        <button class="layui-btn layui-btn layui-btn-xs" onclick="saveUser()" >保存</button>
+    </div>
+  </div>
+
+  <!--基本信息默认显示-->
+  <div class="layui-card-body layui-row layui-col-space10" id="userInfo">
+    <div id="main1" class="layui-col-sm9">
+      <div class="layui-form-item">
+        <h4>王志阳</h4>
+        <h5 class="layui-col-sm2">男</h5>
+        <h5 class="layui-col-sm3">27岁</h5>
+        <h5 class="layui-col-sm3">本科</h5>
+        <h5 class="layui-col-sm4">2012年毕业</h5>
+        <h6 class="layui-col-sm12">籍贯：山东威海</h6>
+        <h6 class="layui-col-sm12">现居住地：上海青浦</h6>
+      </div>
+    </div>
+    <div id="main1" class="layui-col-sm3">
+      <img style="max-height: 200px;max-width: 80px;" src="./images/bgs.png">
+    </div>
+  </div>
+  <!--编辑基本信息-->
+  <div class="layui-card-body layui-row layui-col-space10" id="userEdit" hidden>
+    <div id="main1" class="layui-col-sm9">
+      <div class="layui-form-item">
+        <input type="text" id="" value="王志阳" name="email" autocomplete="off" class="layui-input">
+        <h5 class="layui-col-sm2">
+          <input type="text" id="" value="男" name="email" autocomplete="off" class="layui-input">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="" value="27" name="email" autocomplete="off" class="layui-input">
+        </h5>
+        <h5 class="layui-col-sm3">
+          <input type="text" id="" value="本科" name="email" autocomplete="off" class="layui-input">
+        </h5>
+        <h5 class="layui-col-sm4">
+          <input class="layui-input"  autocomplete="off" placeholder="2012" name="graduationDate" id="graduationDate">
+        </h5>
+        <h6 class="layui-col-sm12">籍贯：
+          <input type="text" id="" value="山东威海" class="layui-input">
+        </h6>
+        <h6 class="layui-col-sm12">现居住地：
+          <input type="text" id="" value="上海青浦" class="layui-input">
+        </h6>
+      </div>
+    </div>
+    <div id="main1" class="layui-col-sm3">
+      <img style="max-height: 200px;max-width: 80px;" src="./images/bgs.png" onclick="checkFile()"/>
+        <input type="file" id="files" style="display: none">
+    </div>
+  </div>
+</div>
+<!--教育经历 -->
+<div class="layui-card">
+  <div class="layui-card-header" id="educEditBtn">
+    <div class="layui-col-sm7">教育经历
+    </div>
+      <div class="layui-col-sm5" >
+        <button class="layui-btn" onclick="addEduc()"><i class="layui-icon"></i>新增</button>
+        <button class="layui-btn layui-btn layui-btn-xs"  onclick="editEduc()" ><i class="layui-icon">&#xe642;</i>编辑</button>
+      </div>
+  </div>
+  <div class="layui-card-header" hidden id="educSaveBtn" >
+    <div class="layui-col-sm10">教育经历</div>
+    <div class="layui-col-sm2" >
+      <button class="layui-btn layui-btn layui-btn-xs" onclick="saveEduc()" >保存</button>
+    </div>
+  </div>
+  <!--教育经历默认显示-->
+  <div class="layui-card-body layui-row layui-col-space10" id="educ">
+    <div class="layui-col-sm12" id="educEditCont">
+      <div class="layui-form-item">
+        <span class="layui-col-sm4">2008.09-2012.06</span>
+        <span class="layui-col-sm3">山东师范大学</span>
+        <span class="layui-col-sm3">心理学</span>
+        <span class="layui-col-sm1">本科</span>
+        <span class="layui-col-sm1">统招</span>
+        <span class="layui-col-sm12">
+          <span style="border: 2px solid #E8E8E8">房地产二手房</span>
+          <span style="border: 2px solid #E8E8E8">10000+</span>
+          <span style="border: 2px solid #E8E8E8">人力招聘</span>
+          <span style="border: 2px solid #E8E8E8">经理</span>
+          <span style="border: 2px solid #E8E8E8">做五休二</span>
+          <span style="border: 2px solid #E8E8E8">入职地</span>
+          <span style="border: 2px solid #E8E8E8">6000</span>
+        </span>
+        <span class="layui-col-sm12">
+          公司简介：<span>...</span>
+        </span>
+        <span class="layui-col-sm12">
+            职位描述及业绩：<span>...</span>
+        </span>
+      </div>
+      <div class="layui-form-item">
+        <span class="layui-col-sm4">2008.09-2012.06</span>
+        <span class="layui-col-sm3">山东师范大学</span>
+        <span class="layui-col-sm3">心理学</span>
+        <span class="layui-col-sm1">本科</span>
+        <span class="layui-col-sm1">统招</span>
+      </div>
+    </div>
+  </div>
+  <!--编辑教育经历-->
+  <div class="layui-card-body layui-row layui-col-space10" id="educEdit" hidden>
+    <div id="main1" class="layui-col-sm12" >
+      <div class="layui-form-item">
+        <span class="layui-col-sm12">
+          开始时间：<input class="layui-input"  autocomplete="off" value="2012"  name="educStrDate" id="educStrDate">
+        </span>
+        <span class="layui-col-sm12">
+          结束时间：<input class="layui-input"  autocomplete="off" value="2012" placeholder="2012" name="educEndDate" id="educEndDate">
+        </span>
+        <span class="layui-col-sm12">
+          学校：<input type="text" id="" value="山东师范大学" name="email" autocomplete="off" class="layui-input"></span>
+        <span class="layui-col-sm12">
+          专业：<input type="text" id="" value="心理学" name="email" autocomplete="off" class="layui-input"></span>
+        <span class="layui-col-sm12">
+          类别：<input type="text" id="" value="本科" name="email" autocomplete="off" class="layui-input"></span>
+        <span class="layui-col-sm12">
+          类别：<input type="text" id="" value="统招" name="email" autocomplete="off" class="layui-input"></span>
+        <span class="layui-col-sm12">
+          <div class="layui-col-sm12">标签：</div>
+          <div class="layui-col-sm10"><input type="text"  value="房地产二手房" class="layui-input"></div>
+          <div class="layui-col-sm2"><button class="layui-btn layui-btn-danger" onclick="removeEducLabel()"><i class="layui-icon"></i></button></div>
+          <div class="layui-col-sm10"><input type="text"  value="10000+" class="layui-input"></div>
+          <div class="layui-col-sm2"><button class="layui-btn layui-btn-danger" onclick="removeEducLabel()"><i class="layui-icon"></i></button></div>
+          <div class="layui-col-sm10"><input type="text"  value="人力招聘" class="layui-input"></div>
+          <div class="layui-col-sm2"><button class="layui-btn layui-btn-danger" onclick="removeEducLabel()"><i class="layui-icon"></i></button></div>
+          <div class="layui-col-sm10"><input type="text"  value="经理" class="layui-input"></div>
+          <div class="layui-col-sm2"><button class="layui-btn layui-btn-danger" onclick="removeEducLabel()"><i class="layui-icon"></i></button></div>
+          <div class="layui-col-sm10"><input type="text"  value="做五休二" class="layui-input"></div>
+          <div class="layui-col-sm2"><button class="layui-btn layui-btn-danger" onclick="removeEducLabel()"><i class="layui-icon"></i></button></div>
+          <div class="layui-col-sm10"><input type="text"  value="入职地" class="layui-input"></div>
+          <div class="layui-col-sm2"><button class="layui-btn layui-btn-danger" onclick="removeEducLabel()"><i class="layui-icon"></i></button></div>
+          <div class="layui-col-sm10"><input type="text" value="6000" class="layui-input"></div>
+          <div class="layui-col-sm2"><button class="layui-btn layui-btn-danger" onclick="removeEducLabel()"><i class="layui-icon"></i></button></div>
+          <div class="layui-col-sm12"><button class="layui-btn" onclick="addEducLabel(this)"><i class="layui-icon"></i>添加标签</button></div>
+        </span>
+        <span class="layui-col-sm12">
+            公司简介：<input type="text" id="" value="山东师范大学" name="email" autocomplete="off" class="layui-input">
+        </span>
+        <span class="layui-col-sm12">
+          职位描述及业绩：<input type="text" id="" value="山东师范大学" name="email" autocomplete="off" class="layui-input">
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="layui-card">
+  <div class="layui-card-header" id="workEditBtn">
+    <div class="layui-col-sm7">工作经历</div>
+      <div class="layui-col-sm5">
+        <button class="layui-btn" onclick="addWork()"><i class="layui-icon"></i>新增</button>
+        <button class="layui-btn layui-btn layui-btn-xs"  onclick="editWork()" ><i class="layui-icon">&#xe642;</i>编辑</button>
+      </div>
+  </div>
+  <div class="layui-card-header" id="workSaveBtn" hidden>
+    <div class="layui-col-sm10">工作经历</div>
+      <div class="layui-col-sm2">
+        <button class="layui-btn layui-btn layui-btn-xs" onclick="saveWork()" >保存</button>
+      </div>
+  </div>
+  <div class="layui-card-body layui-row layui-col-space10" id="work">
+    <div class="layui-col-sm12" id="workCont">
+      <div class="layui-form-item">
+        <span class="layui-col-sm4">2008.09-2012.06</span>
+        <span class="layui-col-sm2">德邦物流</span>
+        <span class="layui-col-sm2">招聘经理</span>
+        <span class="layui-col-sm2">2年6个月</span>
+        <span class="layui-col-sm2">离职原因</span>
+      </div>
+      <div class="layui-form-item">
+        <span class="layui-col-sm4">2008.09-2012.06</span>
+        <span class="layui-col-sm2">德邦物流</span>
+        <span class="layui-col-sm2">招聘经理</span>
+        <span class="layui-col-sm2">2年6个月</span>
+        <span class="layui-col-sm2">离职原因</span>
+      </div>
+    </div>
+  </div>
+  <!--工作经历编辑-->
+  <div class="layui-card-body layui-row layui-col-space10" id="workEdit" hidden>
+    <div id="main1" class="layui-col-sm12">
+      <div class="layui-form-item">
+        <span class="layui-col-sm12">
+          开始时间：<input class="layui-input"  autocomplete="off" value="2012"  name="workStrDate" id="workStrDate">
+        </span>
+        <span class="layui-col-sm12">
+          结束时间：<input class="layui-input"  autocomplete="off" value="2012" placeholder="2012" name="workEndDate" id="workEndDate">
+        </span>
+        <span class="layui-col-sm12">
+          公司：<input type="text" id="" value="德邦物流" name="" autocomplete="off" class="layui-input">
+        </span>
+        <span class="layui-col-sm12">
+          职位：<input type="text" id="" value="招聘经理" name="" autocomplete="off" class="layui-input">
+        </span>
+        <span class="layui-col-sm12">
+          时间：<input type="text" id="" value="2年6个月" name="" autocomplete="off" class="layui-input">
+        </span>
+        <span class="layui-col-sm12">
+          离职原因：<input type="text" id="" value="离职原因" name="" autocomplete="off" class="layui-input">
+        </span>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="layui-card">
+  <div class="layui-card-header">
+    <div class="layui-col-sm10">其他资料</div>
+      <div class="layui-col-sm2">
+        <button class="layui-btn layui-btn layui-btn-xs"  onclick="" ><i class="layui-icon">&#xe642;</i>编辑</button>
+      </div>
+  </div>
+  <div class="layui-card-body layui-row layui-col-space10">
+    <div id="main1" class="layui-col-sm12" style="min-height: 200px;"></div>
+  </div>
+</div>
