@@ -1,0 +1,193 @@
+
+	<article class="resume-wrapper text-right">
+	    <div class="mx-auto text-left bg-white shadow-lg">
+		    <header class="resume-header pt-1 pt-md-0">
+			    <div class="media flex-column flex-md-row">
+				    <img class="mr-3 img-fluid picture mx-auto" src="assets/images/profile.jpg" alt="">
+				    <div class="media-body p-4 d-flex flex-column flex-md-row mx-auto mx-lg-0">
+					    <div class="primary-info">
+						    <h1 class="name mt-0 mb-1 text-left">
+                                {{ resume.username }}
+                                <a href=/manager/resumes/{{resume.id}}/><i class="fas fa-save fa-fw"></i></a>
+                            </h1>
+						    <ul class="list-unstyled">
+							    <li class="mb-2"><i class="far fa-envelope fa-fw mr-2" data-fa-transform="grow-3"></i>{{ resume.email }}</li>
+							    <li><i class="fas fa-mobile-alt fa-fw mr-2" data-fa-transform="grow-6"></i>{{ resume.phone_number }}</li>
+                                <span class="resume_id" id="resume_id" style="display:none;">123</span>
+						    </ul>
+					    </div><!--//primary-info-->
+					    <div class="secondary-info ml-md-auto mt-2" style="display:none;">
+						    <ul class="resume-social list-unstyled">
+				                <li class="mb-3"><a href="#"><span class="fa-container text-center mr-2"><i class="fab fa-linkedin-in fa-fw"></i></span>linkedin.com/in/stevedoe</a></li>
+				                <li class="mb-3"><a href="#"><span class="fa-container text-center mr-2"><i class="fab fa-github-alt fa-fw"></i></span>github.com/username</a></li>
+				                <li class="mb-3"><a href="#"><span class="fa-container text-center mr-2"><i class="fab fa-codepen fa-fw"></i></span>codepen.io/username/</a></li>
+				                <li><a href="#"><span class="fa-container text-center mr-2"><i class="fas fa-globe"></i></span>yourwebsite.com</a></li>
+						    </ul>
+					    </div><!--//secondary-info-->
+					    
+				    </div><!--//media-body-->
+			    </div><!--//media-->
+		    </header>
+
+            <style type="text/css">
+              .resume_basic_header1 {
+                font-size: 75%
+              }
+              .resume_basic_addon {
+                background: #e0dcd7
+              }
+            </style>
+			<div class="resume-body p-5">
+			  <section class="resume-section summary-section mb-5">
+			    <div class="card">
+                  <?-- card header -->
+			      <div class="card-header" id="headering">
+				    <strong>基本信息</strong>
+                      <i class="fas fa-edit" id="resume_basic_edit_button" style=""></i>
+                      <i class="fas fa-angle-up" id="resume_basic_edit_button_up" style="float:right;display:none;"></i>
+                      <i class="fas fa-angle-down" id="resume_basic_edit_button_down" style="float:right;"></i>
+			      </div>
+                  <?-- end card header -->
+                  <?-- card body -->
+			      <div class="card-body" style="padding:0.5rem" id="resume_basic_show">
+			        <div class="row">
+				      <div class="col-md-3 input-group">
+					    <div class="input-group-prepend resume_basic_addon">
+					      <span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:100px">姓名</span>
+					    </div>
+				        <input type="text" class="form-control" name="resume_basic_name" id="resume_basic_name" value="">
+				      </div>
+				      <div class="col-md-3 input-group">
+					    <div class="input-group-prepend">
+					        <span class="input-group-text resume_basic_header1" id="basic-addon1" style="font-size:75%;width:70px">性别*</span>
+					    </div>
+				        <input type="text" class="form-control" name="resume_basic_gendor" id="resume_basic_gendor" value="">
+				      </div>
+				      <div class="col-md-3 input-group">
+					    <div class="input-group-prepend">
+					        <span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">出生年月</span>
+                        </div>
+                        <input type="text" class="form-control" name="resume_basic_birth_time" id="resume_basic_birth_time" value="">
+                      </div>
+                      <div class="col-md-3 input-group">
+                        <div class="input-group-prepend">
+					        <span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:100px">参加工作时间</span>
+                        </div>
+                        <input type="text" class="form-control" name="resume_basic_work_time" id="resume_basic_work_time" value="">
+                      </div>
+                    </div> <?--- row -->
+				    <div class="row">
+				      <div class="col-md-3 input-group">
+					    <div class="input-group-prepend">
+					        <span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:100px">户口所在地</span>
+                        </div>
+                        <input type="text" class="form-control" name="resume_basic_birth_place" id="resume_basic_birth_place" value="">
+                      </div>
+                    </div>
+                    <div class="row">
+				      <div class="col-md-3 input-group">
+					    <div class="input-group-prepend">
+					        <span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:100px">现居住城市</span>
+                        </div>
+                        <input type="text" class="form-control" name="resume_basic_current_place" id="resume_basic_current_place" value="">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-3 input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:100px">联系方式</span>
+                        </div>
+                        <input type="text" class="form-control" name="resume_basic_phone" id="resume_basic_phone" value="">
+                      </div>
+                      <div class="col-md-3 input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text resume_basic_header1" id="basic-addon1" style="width:70px">电子邮箱</span>
+                        </div>
+                        <input type="text" class="form-control" name="resume_basic_email" id="resume_basic_email" value="">
+                      </div>
+                      <div class="col-md-3 input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text resume_basic_header1" id="basic-addon1" style="width=70px">政治面貌</span>
+                        </div>
+                        <input type="text" class="form-control" name="resume_basic_role" id="resume_basic_role" value="">
+                      </div>
+				    </div> <?--- row -->
+				    <div class="row">
+                      <div class="col-md-3">
+                        <button class="button-default" id="resume_basic_edit_confirm" style="display:none;">
+                          保存修改
+                        </button>
+                      </div>
+                      <div class="col-md-3">
+                        <button class="button-default" id="resume_basic_edit_cancel" style="display:none;">
+                          取消
+                        </button>
+                    </div>
+				</div>
+			  </div> <?-- the card body info -->
+			  <div class="card-body" style="padding:0.5rem">
+				<div class="row">
+				</div>
+			  </div>
+			</div>  <?-- card -->
+
+            <?-- Add the Experinece Edit card ---->
+            <div class="card">
+              <div class="card-header" id="headering2">
+                <strong> 工作经历 </strong>
+                <i class="fas fa-plus" id="resume_experience_add_button" style="float:right;"></i>
+              </div>
+              <div class="card-body" style="padding:0.5rem" id="resume_experience_show">
+              </div>
+            </div>
+            <?-- End Add the Expericen Edit card ---->
+
+            <?-- Add the Education Edit card ---->
+            <div class="card">
+              <div class="card-header" id="headering2">
+                <strong> 教育经历 </strong>
+                <i class="fas fa-plus" id="resume_education_add_button" style="float:right;"></i>
+              </div>
+              <div class="card-body" style="padding:0.5rem" id="resume_education_show">
+              </div>
+            </div>
+            <?-- End Add the Expericen Edit card ---->
+
+            <?-- Add the Project Edit card ---->
+            <div class="card">
+              <div class="card-header" id="headering2">
+                <strong> 项目经历 </strong>
+                <i class="fas fa-plus" id="resume_project_add_button" style="float:right;"></i>
+              </div>
+              <div class="card-body" style="padding:0.5rem" id="resume_project_show">
+              </div>
+            </div>
+            <?-- End Add the Project Edit card ---->
+
+            <?-- Add the LanguaGe Edit card ---->
+            <div class="card">
+              <div class="card-header" id="headering2">
+                <strong> 语言 </strong>
+                <i class="fas fa-plus" id="resume_language_add_button" style="float:right;"></i>
+              </div>
+              <div class="card-body" style="padding:0.5rem" id="resume_language_show">
+              </div>
+            </div>
+            <?-- End Add the LanguaGe Edit card ---->
+
+            <?-- Add the certification Edit card ---->
+            <div class="card">
+              <div class="card-header" id="headering2">
+                <strong> 证书 </strong>
+                <i class="fas fa-plus" id="resume_certification_add_button" style="float:right;"></i>
+              </div>
+              <div class="card-body" style="padding:0.5rem" id="resume_certification_show">
+              </div>
+            </div>
+            <?-- End Add the certification Edit card ---->
+
+          </section>
+		</div>
+
+	    </div>
+    </article>  

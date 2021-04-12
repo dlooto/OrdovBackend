@@ -1,0 +1,104 @@
+{% load static %}
+
+{% include 'recruit_manager/basic_header.html' %}
+
+<body class="bg-gradient-primary">
+
+  <div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-left">
+                    <h1 class="h4 text-gray-900 mb-4">Update Resume</h1>
+                  </div>
+
+                  {% if form %}
+
+                  {% include 'candidates/_progress.html' %}
+                  <form method='post' enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+
+                    <div class="form-group">
+                      <div class="form-control">
+                      {{ field.label_tag }} {{ field }}
+                      {{ field.errors }}
+                      {% if field.help_text %}
+                      <p class="help">{{ field.help_text|safe }}</p>
+                      {% endif %}
+                      </div>
+                    </div>
+
+                    {% endfor %}
+                    <input type='submit' value='Submit'>
+
+                  </form>
+                  {% endif %}
+
+                  {% if success %}
+                  <h1>Congratulations! <small>Application Submitted</small></h1>
+                  <div class='row'>
+                    <div class='col-md-offset-3 col-md-6'>
+                      <h3>What next?</h3>
+                      <p>Your application materials have been received and our being reviewed. To speed
+                        up the job search please request interviews for jobs of interest and provide your
+                        interview time availability below.
+                        <ul>
+                          <li>
+                            <a href='{{ jobs_url }}'>
+                              Request job interviews
+                            </a>
+                          </li>
+                          <li>
+                            <a href='{{ availability_url }}'>
+                              Provide your interview availability
+                            </a>
+                          </li>
+                        </ul>
+                    </div>
+                  </div>
+                  {% endif %}
+                </div>
+
+                <hr>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  {% block scripts %}
+
+  <script>
+   $('#step1').addClass('complete');
+  </script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jstimezonedetect/1.0.6/jstz.min.js"></script>
+  <script>
+   var timezoneValues = Object.values(jstz.olson.timezones);
+   var detectedTimezone = jstz.determine().name();
+   if(timezoneValues.indexOf(detectedTimezone) != -1) {
+     $('#id_timezone').prop('selected', true).val(detectedTimezone);
+   }
+  </script>
+  {% endblock %}
+
+  {% include 'recruit_manager/basic_js.html' %}
+
+</body>
+
+</html>

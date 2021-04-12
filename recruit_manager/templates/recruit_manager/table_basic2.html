@@ -1,0 +1,80 @@
+{% load static %}
+{% include 'recruit_manager/table_header.html' %}
+<body>
+
+<div class="sidebar2s">
+  <div class="sidebar2 right"> 项目权限设置
+    {% include "recruit_manager/perm.html" %}
+  </div>
+</div>
+
+  <!-- Page Wrapper -->
+  <div id="wrapper">
+
+    <!-- Content Wrapper -->
+  <div id="content-wrapper" class="d-flex flex-column">
+
+  <div class="row">
+	<div class="col-md-6">
+
+	<div class="row">	
+    <div class="col-md-1">
+    </div>
+    <div class="col-md-11">
+    <div class="btn-group btn-breadcrumb">
+       <a href="#" class="btn btn-default"><i class="fas fa-home"></i></a>
+       <a href="{% url 'app_manager:t_index' %}" class="btn btn-default">管理员首页</a>
+       <a href={% url 'app_manager:t_multi' %} class="btn btn-default">项目管理</a>
+       <span class="btn btn-default" id="projSelectorBtn">选择项目</span>
+       {% if UserType == "Manager" %}
+       <span class="btn btn-default" id="projPermissionBtn">项目权限管理</span>
+       {% endif %}
+
+     </div>
+     </div>
+     </div>
+
+     </div>
+  </div> <?-- **** -->
+
+
+  <!-- Main Content -->
+  <div id="content">
+    <div class="card shadow mb-4">
+      <div class="card-header py-3" style="display:none;">
+        <h6 class="m-0 font-weight-bold text-primary">Details</h6>
+      </div>
+      <div class="card-body">
+        {% block content %} {% endblock %}
+      </div>
+    </div>
+  </div>  <!-- content -->
+  {% include 'recruit_manager/basic_footer.html' %}
+
+  </div><!-- End of Content Wrapper -->
+
+  </div><!-- End of Page Wrapper -->
+
+  <!-- Scroll to Top Button-->
+  <a class="scroll-to-top rounded" href="#page-top">
+    <i class="fas fa-angle-up"></i>
+  </a>
+
+  {% include 'recruit_manager/basic_logout.html' %}
+
+  {% include 'recruit_manager/basic_js.html' %}
+
+  <!-- Page level plugins -->
+  <script src="{% static 'recruit_manager/js/datatables.min.js' %}"></script>
+  <script src="{% static 'recruit_manager/js/scrolling.js' %}"></script>
+  <script src="{% static 'recruit_manager/vendor/datatables/dataTables.bootstrap4.min.js' %}"></script>
+  <script src="{% static 'recruit_manager/vendor/datatables/dataTables.checkboxes.min.js' %}"></script>
+  <script src="{% static 'recruit_manager/js/bootstrap-datetimepicker.js' %}"></script>
+  <script src="{% static 'recruit_manager/js/bootstrap-datetimepicker.fr.js' %}"></script>
+  <script src="{% static 'recruit_manager/js/bootstrap-select.min.js' %}"></script>
+
+  <!-- Page level custom scripts -->
+  {% block extra_js %} {% endblock %}
+</body>
+
+</html>

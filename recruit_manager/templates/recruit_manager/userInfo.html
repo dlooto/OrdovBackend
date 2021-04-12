@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{% load static %}
+<html class="x-admin-sm">
+<head>
+    {% include 'recruit_manager/userInfoHeader.html' %}
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15" id=resumeInfo resumeId={{resumeId}} projectId={{projectId}}
+         interviewId={{interviewId}}>
+        <div class="layui-col-md4">
+            {% include 'recruit_manager/userInfoBasic.html' %}
+            {% include 'recruit_manager/userInfoEdu.html' %}
+            {% include 'recruit_manager/userInfoExp.html' %}
+        </div>
+        {% include 'recruit_manager/userInfoOther.html' %}
+    </div>
+    <div class="layui-col-md4">
+        {% include 'recruit_manager/userInfoInterview.html' %}
+    </div>
+    <div class="layui-col-md4">
+        {% include 'recruit_manager/userInfoHistory.html' %}
+    </div>
+    <style>
+        .flex-button {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 49px;
+            line-height: 49px;
+            z-index: 1010;
+        }
+    </style>
+    <div class="layui-col-md12 flex-button">
+        <div class="layui-card">
+            <div class="layui-card-body">
+                <div style="text-align: center;">
+                    <!--          <button class="layui-btn layui-btn layui-btn-xs">Close</button>-->
+                    <button class="layui-btn layui-btn layui-btn-xs" id="deepContactButton">深度沟通</button>
+                    <button class="layui-btn layui-btn layui-btn-xs" id="unlinkButton">未接通</button>
+                    <!--          <button class="layui-btn layui-btn layui-btn-xs" id="dailButton">拨号</button>-->
+                    <button class="layui-btn layui-btn layui-btn-xs" id="agreeInterviewButton">同意面试</button>
+                    <button class="layui-btn layui-btn layui-btn-xs" id="giveupInterviewButton">放弃面试</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+<input id="hidden_resume_id" type="text" style="display: none" value="{{resume.id}}">
+<input id="hidden_interview_id" type="text" style="display: none" value="{{resume.interview_id}}">
+
+<script src="https://cdn.bootcss.com/echarts/4.2.1-rc1/echarts.min.js"></script>
+<script src="{% static 'recruit_manager/js/callInterview/basic_op.js' %}"></script>
+<script type="text/javascript">
+
+
+</script>
+</body>
+</html>

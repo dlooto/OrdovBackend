@@ -1,0 +1,92 @@
+{% load static %}
+{% include 'recruit_manager/basic_header.html' %}
+
+<body class="bg-gradient-primary">
+
+  <div class="container">
+
+    <!-- Outer Row -->
+    <div class="row justify-content-center">
+
+      <div class="col-xl-10 col-lg-12 col-md-9">
+
+        <div class="card o-hidden border-0 shadow-lg my-5">
+          <div class="card-body p-0">
+            <!-- Nested Row within Card Body -->
+            <div class="row">
+
+              <div class="col-lg-6">
+                <div class="p-5">
+                  <div class="text-left">
+                    <h1 class="h4 text-gray-900 mb-4">Simulation Of Interview: {{ t_interview.status }}</h1>
+                  </div>
+                  <form class="user "action={% url 'app_manager:t_interview_result' t_interview.id %} method='GET'>
+
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="apiName" aria-describedby="Username" placeholder={{ t_resume.username }}>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="apiPhone" placeholder={{ t_resume.phone_number }}>
+                      </div>
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="apiEmail" placeholder={{ t_resume.email }}>
+                      </div>
+
+                      {% if t_interview.status == 0 %}
+                      <button class="btn btn-info btn-icon-split border-0" id="stage">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-right"></i>
+                        </span>
+                        <span class="text">开始预约联系人</span>
+                      </button>
+                      {% elif t_interview.status == 1 %}
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="text_result" placeholder="填写意见">
+                      </div>
+                      <button class="btn btn-info btn-icon-split border-0" id="stage">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-right"></i>
+                        </span>
+                        <span class="text">面试前沟通结束</span>
+                      </button>
+                      {% elif t_interview.status < 5 %}
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="text_result" placeholder="填写意见">
+                      </div>
+                      <button class="btn btn-info btn-icon-split border-0" id="stage">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-right"></i>
+                        </span>
+                        <span class="text">面试结束</span>
+                      </button>
+                      {% elif t_interview.status == 5 %}
+                      <div class="form-group">
+                        <input type="text" class="form-control" id="text_result" placeholder="OFFER详情">
+                      </div>
+                      <button class="btn btn-info btn-icon-split border-0" id="stage">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-arrow-right"></i>
+                        </span>
+                        <span class="text">发放OFFER</span>
+                      </button>
+                      {% endif %}
+                    <hr>
+                  </form>
+                  <hr>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  {% include 'recruit_manager/basic_js.html' %}
+
+</body>
+
+</html>

@@ -1,0 +1,675 @@
+{% extends "recruit_manager/table_basic.html" %}
+{% load static %}
+{% block content %}
+
+<div clasv class="card">
+  <div class="card-header" id="headingTwo" style="background-color: #55e2f7">
+    <strong>*智能招聘* 填写公司属性信息</strong>
+    ordov系统将根据您填写的信息优先匹配最符合要求的候选人
+  </div>
+  <div class="card-body" style="padding: 0.5rem;">
+    <div class="row">
+      <div class="col-md-3 input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="Level1" style="width:70px">一级分类*</span>
+        </div>
+        <select class="form-control" id="focusPoint" name="focusPoint" aria-labelledby="basic-addon1">
+          <option value='NULL'>-</option>
+          <option value='areaType' name="行业类别">行业类别</option>
+          <option value='postType'>岗位类别</option>
+          <option value='postLevelType'>岗位级别</option>
+          <option value='postLobbyType'>岗位作息</option>
+          <option value='socialSecurity'>社保公积金</option>
+          <option value='postFeature'>岗位特征</option>
+        </select>
+       </div>
+
+      <div class="col-md-3 input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="basic-addon1" style="width:70px">二级分类*</span>
+        </div>
+        <select class="form-control" id="focusPointItem" name="focusPointItem" aria-labelledby="basic-addon1">
+          <option>-</option>
+        </select>
+			</div>
+
+			<div class="col-md-3 input-group">
+          <div class="input-group-prepend">
+            <button style="background-color: #55e2f7" id="addTag">确定增加企业标签
+            </button>
+          </div>
+			</div>
+		</div>
+
+		<div class="row">
+        <div class="col-md-12 input-group" name="tagPanel" id="tagPanel">
+        </div>
+		</div>
+
+  </div>
+
+</div>
+
+<form name='filter_form' id="post_filter_form" enctype="multipart/form-data">
+    {% csrf_token %}
+
+    <?--Project Info-->
+    <div clasv class="card">
+        <div class="card-header" id="headingTwo">
+            <strong>填写公司信息</strong>
+        </div>
+        <div class="card-body" style="padding: 0.5rem;">
+            <div class="row">
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">公司名称 *</span>
+                    </div>
+                    <input type="text" class="form-control" name="company_name" id="company_id" value="">
+                </div>
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">部门名称 *</span>
+                    </div>
+                    <input type="text" class="form-control" name="department_name" id="department_id" value="">
+                </div>
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">岗位名称 *</span>
+                    </div>
+                    <input type="text" class="form-control" name="post_name" id="post_id" value="">
+                </div>
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">岗位类型 *</span>
+                    </div>
+                    <input type="text" class="form-control" name="post_type" id="post_type_id" value="">
+                </div>
+                <?-- Innter Filter-->
+            </div>
+        </div>
+    </div>
+    <?-- Filter -->
+
+    <?--Project Info-->
+    <div clasv class="card">
+        <div class="card-header" id="headingTwo">
+            <strong>岗位要求设置</strong>
+        </div>
+
+        <div class="card-body" style="padding: 0.5rem;">
+            <div class="row">
+                <?-- Inner Filter -->
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1" style="width:70px">最低学历</span>
+                    </div>
+                    <select class="form-control" id="degree_id_min" name="degree_id_min" aria-labelledby="basic-addon1">
+                        <option>不限</option>
+                        <option>初中</option>
+                        <option>高中</option>
+                        <option>大专</option>
+                        <option>本科</option>
+                        <option>硕士</option>
+                        <option>博士</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">最小年龄</span>
+                    </div>
+                    <input type="text" class="form-control" name="age_id_min" id="age_id_min" placeholder="0"
+                           value=""></input>
+                </div>
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2" style="width:90px">毕业区间Start</span>
+                    </div>
+                    <select class="form-control" id="graduate_time_start" name="graduate_time_start"
+                            aria-labelledby="basic-addon1">
+                        <option>不限</option>
+                        <option>2000</option>
+                        <option>2001</option>
+                        <option>2002</option>
+                        <option>2003</option>
+                        <option>2004</option>
+                        <option>2005</option>
+                        <option>2006</option>
+                        <option>2007</option>
+                        <option>2008</option>
+                        <option>2009</option>
+                        <option>2010</option>
+                        <option>2011</option>
+                        <option>2012</option>
+                        <option>2013</option>
+                        <option>2014</option>
+                        <option>2015</option>
+                        <option>2016</option>
+                        <option>2017</option>
+                        <option>2018</option>
+                        <option>2019</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">工作地点.省</span>
+                    </div>
+                    <input type="text" class="form-control" name="working_place_province" id="province_id"
+                           placeholder="省" value=""></input>
+                </div>
+
+                <?-- Innter Filter-->
+            </div>
+            <div class="row">
+                <?-- Inner Filter -->
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2" style="width:70px">最高学历</span>
+                    </div>
+                    <select class="form-control" id="degree_id_max" name="degree_id_max" aria-labelledby="basic-addon2">
+                        <option>不限</option>
+                        <option>初中</option>
+                        <option>高中</option>
+                        <option>本科</option>
+                        <option>硕士</option>
+                        <option>博士</option>
+                    </select>
+                </div>
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon4">最大年龄</span>
+                    </div>
+                    <input type="text" class="form-control" name="age_id_max" id="age_id_max" placeholder="最高年龄"
+                           value=""></input>
+                </div>
+
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2" style="width:90px">毕业区间.End</span>
+                    </div>
+                    <select class="form-control" id="graduate_time_end" name="graduate_time_end"
+                            aria-labelledby="basic-addon1">
+                        <option>不限</option>
+                        <option>2000</option>
+                        <option>2001</option>
+                        <option>2002</option>
+                        <option>2003</option>
+                        <option>2004</option>
+                        <option>2005</option>
+                        <option>2006</option>
+                        <option>2007</option>
+                        <option>2008</option>
+                        <option>2009</option>
+                        <option>2010</option>
+                        <option>2011</option>
+                        <option>2012</option>
+                        <option>2013</option>
+                        <option>2014</option>
+                        <option>2015</option>
+                        <option>2016</option>
+                        <option>2017</option>
+                        <option>2018</option>
+                        <option>2019</option>
+                    </select>
+
+                </div>
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3" style="width:84px">*工作地点.市</span>
+                    </div>
+                    <input type="text" class="form-control" name="working_place_city" id="city_id" placeholder="市"
+                           value=""></input>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2" style="width:70px">性别</span>
+                    </div>
+                    <select class="form-control" name="gender_id" id="gender_id">
+                        <option>不限</option>
+                        <option>男</option>
+                        <option>女</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">简历最晚更新时间</span>
+                    </div>
+                    <input type="text" class="form-control" name="resume_latest_modified" id="last_modified_time"
+                           value="1970-01-01"></input>
+                </div>
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">工作地点.区</span>
+                    </div>
+                    <input type="text" class="form-control" name="working_place_district" id="district_id"
+                           placeholder="区" value=""></input>
+                </div>
+
+                <div class="col-md-3 form-group" style="display:none;">
+                    <label> 工作地点 </label>
+                    <select class="form-control" id="province_id">
+                        <option>不限</option>
+                        <option>北京</option>
+                        <option>上海</option>
+                        <option>杭州</option>
+                    </select>
+                </div>
+
+                <?-- Innter Filter-->
+            </div>
+        </div>
+    </div>
+    <?-- Filter -->
+
+
+    <?--Project Info-->
+    <div clasv class="card">
+        <div class="card-header" id="headingFour">
+            <strong>岗位其他信息</strong>
+        </div>
+        <div class="card-body" style="padding: 0.5rem;">
+            <div class="row">
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">起薪</span>
+                    </div>
+                    <input type="text" class="form-control" name="min_salary_id" id="min_salary_id" placeholder="元/月"
+                           value=""></input>
+                </div>
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">公司联系人姓名</span>
+                    </div>
+                    <input type="text" class="form-control" name="linkman_name" id="linkman_name" placeholder=""
+                           value=""></input>
+                </div>
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">电话</span>
+                    </div>
+                    <input type="text" class="form-control" name="linkman_phone" id="linkman_phone" placeholder=""
+                           value=""></input>
+                </div>
+
+
+                <div class="col-md-3 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">百应任务 *</span>
+                    </div>
+                    <select class="form-control" id="baiying_task_id" name="baiying_task_id"
+                            aria-labelledby="basic-addon2">
+                    </select>
+                </div>
+
+                <?-- Innter Filter-->
+            </div>
+
+            <div style="padding: 5px 0; color: #ccc"></div>
+
+
+            <div class="row">
+                <div class="col-md-12 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">邀约录音</span>
+                        <input class="btn input-group-text" type="file" name="invite_voice">
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding: 5px 0; color: #ccc"></div>
+
+            <div class="row">
+                <div class="col-md-12 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">offer录音</span>
+                        <input class="btn input-group-text" type="file" name="offer_voice">
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding: 5px 0; color: #ccc"></div>
+
+            <input type="text" name="keywords" style="display: none" id="keywords" value=""/>
+
+            <div id="keywords_group" class="btn-group">
+                <!--                <button onclick="removeKeyword()" style="background-color: #f7e64c;" type="button"-->
+                <!--                        class="stage_two_dail btn btn-sm ">福利好-->
+                <!--                </button>-->
+            </div>
+            <div style="padding: 5px 0; color: #ccc"></div>
+
+            <div style="padding: 5px 0; color: #ccc"></div>
+
+
+            <div class="row">
+                <div class="col-md-12 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">话术指引*</span>
+                        <div id="talk_hint_editor">
+
+                        </div>
+                        <textarea style="display: none" id="talk_hint" name="talk_hint"
+                                  style="width:800px;height:150px">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+            <div style="padding: 5px 0; color: #ccc"></div>
+            <div class="row">
+                <div class="col-md-12 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">开场白*</span>
+                        <div id="prologue_editor">
+
+                        </div>
+                        <textarea style="display: none" id="prologue" name="prologue"
+                                  style="width:800px;height:150px">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding: 5px 0; color: #ccc"></div>
+            <div class="row">
+                <div class="col-md-12 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">沟通工作地点*</span>
+                        <div id="workplace_editor">
+
+                        </div>
+                        <textarea style="display: none" id="workplace" name="workplace"
+                                  style="width:800px;height:150px">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding: 5px 0; color: #ccc"></div>
+            <div class="row">
+                <div class="col-md-12 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">沟通工作意愿*</span>
+                        <div id="work_purpose_editor">
+
+                        </div>
+                        <textarea style="display: none" id="work_purpose" name="work_purpose"
+                                  style="width:800px;height:150px">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding: 5px 0; color: #ccc"></div>
+            <div class="row">
+                <div class="col-md-12 input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">添加微信邀请*</span>
+                        <div id="wechat_invite_editor">
+
+                        </div>
+                        <textarea style="display: none" id="wechat_invite" name="wechat_invite"
+                                  style="width:800px;height:150px">
+                        </textarea>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    </div>
+    <?-- Filter -->
+
+    <div class="row col-md-24 mt-1">
+        <div class="col-md-3 form-group">
+            <button type='submit' class="btn btn-primary" id='post_button_id'>确认发布</button>
+        </div>
+    </div>
+</form>
+
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Project</th>
+            <th>*Company</th>
+            <th>*Name</th>
+            <th>Place</th>
+            <th>smart</th>
+            <th>*JD</th>
+            <th>Link</th>
+            <th>Request</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<!-- wangEditor -->
+<script>
+
+    // 初始化关键词 json object
+		var focusPointMap = {
+			'areaType': '行业类别',
+			'postType': '岗位类别',
+			'postLevelType': '岗位级别',
+			'postLobbyType': '岗位作息',
+			'socialSecurity': '社保公积金',
+			'postFeature': '岗位特征',
+	  }
+    var keywords = {};
+
+    function renderBtn(title) {
+        return '<button ondblclick="removeKeyword(\'' + title + '\')" style="background-color: #f7e64c;margin-right: 10px" type="button" class="stage_two_dail btn btn-sm ">' + title + '</button>';
+    }
+
+    function removeKeyword(title) {
+			console.log("remove", title);
+			delete keywords[title]
+			$('#tagPanel').empty()
+			for (var k in keywords) {
+				console.log("add", k)
+				$('#tagPanel').append(renderBtn(k))
+			}
+		}
+
+    console.log("hello world------------>")
+
+    $('#focusPoint').change(function() {
+      console.log("focus Point .....")
+      var focus = $("#focusPoint option:selected").val();
+      $.ajax({
+        url: '/api/itemInFocusPoints/',
+        type: 'GET',
+        data: {
+          focus: focus,
+          start: 0,
+          length: 9999999,
+        },
+        success: function(res) {
+           $('#focusPointItem').empty()
+           console.log("Get Some Info...", res)
+           for (var item of res.results) {
+              var p = '<option id='+item.id+' value='+item.name+'>'+item.name+'</option>'
+              $('#focusPointItem').append(p)
+           }
+        }
+      })
+    });
+
+    $('#addTag').on('click', function() {
+			console.log("click add tag")
+			var level1=$("#focusPoint option:selected").val();
+			var level2=$("#focusPointItem option:selected").val();
+
+			if (level1 == "NULL" || level2 == "" || level2 == "-") {
+				alert("请选择一级和二级的分类")
+				return
+			}
+
+			if (!focusPointMap.hasOwnProperty(level1)) {
+				alert("not valid item"+level1)
+				return
+			}
+			var level1Name=focusPointMap[level1]
+
+			for (var key in keywords) {
+				item2 = keywords[key]
+				if (item2.level1 == level1) {
+					alert(level1Name+" 不能重复选择")
+					return
+				}
+			}
+
+			key=level1Name+":"+level2
+			keywords[key]={level1:level1, level2:level2, level1Name:level1Name}
+			item = keywords[key]
+
+      $('#tagPanel').append(renderBtn(key))
+			 //console.log(renderBtn(title))
+    });
+
+
+    var editorList = [
+        'talk_hint',
+        'prologue',
+        'workplace',
+        'work_purpose',
+        'wechat_invite'
+    ];
+
+    $(document).ready(function () {
+        var selected = [];
+        var table = $('#dataTable').DataTable({
+            "processing": true,
+            "serverSide": true,
+
+            "ajax": {
+                "url": "/api/posts/",
+                "type": "GET",
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                $('td:eq(1)', nRow).html(iDisplayIndex + 1);
+                return nRow;
+            },
+            "rowCallback": function (row, data) {
+                if ($.inArray(data.DT_RowId.toString(), selected) !== -1) {
+                    $(row).addClass('selected');
+                }
+            },
+
+            "columns": [
+                {"data": "id"},
+                {"data": "project_name"},
+                {"data": "name2"},
+                {"data": "name"},
+                {"data": "place"},
+                {"data": "tag"},
+                {"data": "description"},
+                {"data": "link"},
+                {"data": "request"},
+            ],
+        });
+
+        $('#dataTable tbody').on('click', 'tr', function () {
+            var id = this.id;
+            var index = $.inArray(id, selected);
+
+            if (index === -1) {
+                selected.push(id);
+            } else {
+                selected.splice(index, 1);
+            }
+            // alert(1);
+            // $(this).toggleClass('selected');
+        });
+
+        $('#id_b_submit').on('click', function () {
+            console.log(selected);
+            localStorage['post'] = selected[0];
+        });
+        $('#post_button_id').on('click', function () {
+
+            //keywords处理
+            if (Object.keys(keywords).length > 0) {
+                $('#keywords').val(JSON.stringify(keywords));
+            }
+
+            //alert(JSON.stringify(keywords))
+
+            postAjaxSubmit()
+            table.draw()
+        });
+    });
+
+    function postAjaxSubmit() {
+        if (false) {
+            var formData = new FormData($("#post_filter_form")[0]);
+            console.log("typeof(formData)", typeof(formData))
+            $.ajax({
+                url: '/post/post/update/',
+                type: 'POST',
+                data: formData,
+                async: false,
+                cache: false,
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                },
+                error: function (data) {
+                }
+            });
+        } else {
+            //alert("HHHHHHH"+$('#post_filter_form').serialize())
+            valData=$('#post_filter_form').serialize()
+            valData=valData+"&keywords="+JSON.stringify(keywords)
+            $.ajax({
+                "url": "/post/post/update/",
+                "type": "POST",
+                "data": valData,
+            });
+        }
+
+    }
+
+    $('#last_modified_time').datepicker({
+        dateFormat: 'yy-mm-dd',
+    });
+
+    $.ajax({
+        type: "GET",
+        url: '/interview/ai/task',
+        async: false,
+        dataType: "json",
+        success: function (data) {
+            $('#baiying_task_id').html("")
+            $('#baiying_task_id').prepend('<option value="">请选择任务</option>');
+            if (data != '') {
+                $.each(data.ai_taskId, function (index, ele) {
+                    $('#baiying_task_id').append('<option value=' + ele[0] + '>' + ele[1] + '</option>');
+                });
+            }
+        }
+    });
+
+</script>
+{% endblock%}

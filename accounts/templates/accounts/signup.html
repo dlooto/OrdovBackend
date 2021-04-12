@@ -1,0 +1,56 @@
+{% extends "accounts/base.html" %}
+{% load i18n %}
+{% block content %}
+
+<p>
+  {% blocktrans %}
+  <a href="/accounts/login/"> 已经有账号了？直接登录</a>.
+  {% endblocktrans %}
+</p>
+
+<form id="signup_form" method="post" action="{% url 'accounts_signup' %}">
+  {% csrf_token %}
+  <div class="row">
+  <div class="col-md-12 input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">姓名</span>
+    </div>
+	<input type="text" class="form-control" name="username" id="username_id" value="">
+  </div>
+  </div>
+
+  <div class="row">
+  <div class="col-md-12 input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">密码</span>
+    </div>
+	<input type="text" class="form-control" name="password1" id="password1_id" value="">
+  </div>
+  </div>
+
+  <div class="row">
+  <div class="col-md-12 input-group">
+    <div class="input-group-prepend">
+      <span class="input-group-text" id="basic-addon1">确认密码</span>
+    </div>
+	<input type="text" class="form-control" name="password2" id="password2_id" value="">
+  </div>
+  </div>
+
+  <div class="row">
+  <div class="col-md-12 input-group">
+    <select class="form-control" id="user_type_id" name="user_type" aria-labelledby="basic-addon1">
+       <option></option>
+       <option>Candidate</option>
+       <option>Recruiter</option>
+       <option>Employer</option>
+	   <option>Manager</option>
+    </select>
+  </div>
+  </div>
+
+
+  <button type="submit">注册</button>
+</form>
+
+{% endblock %}

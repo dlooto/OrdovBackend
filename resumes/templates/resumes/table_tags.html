@@ -1,0 +1,450 @@
+{% extends "recruit_manager/table_basic.html" %}
+{% load static %}
+{% block content %}
+
+<button id="add" type="button" class="btn btn-primary btn-lg">添加分类</button>
+<br/>
+<div style="margin-top: 15px"></div>
+
+主分类:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-secondary" value="areaType">行业类别</button>
+    <button type="button" class="btn btn-secondary" value="postType">岗位类别</button>
+    <button type="button" class="btn btn-secondary" value="postLevelType">岗位级别</button>
+    <button type="button" class="btn btn-secondary" value="postLobbyType">岗位作息</button>
+    <button type="button" class="btn btn-secondary" value="socialSecurity">社保公积金</button>
+    <button type="button" class="btn btn-secondary" value="postFeature">岗位特征</button>
+</div>
+<div style="margin-top: 5px"></div>
+
+<div id="child">
+
+    二级分类:
+    <div class="btn-group btn-group-sm" role="group" aria-label="Basic example" id="subbox">
+        <!--        <button type="button" class="btn btn-secondary" value="areaType">行业类别</button>-->
+        <!--        <button type="button" class="btn btn-secondary" value="postType">岗位类别</button>-->
+        <!--        <button type="button" class="btn btn-secondary" value="postLevelType">岗位级别</button>-->
+        <!--        <button type="button" class="btn btn-secondary" value="postLobbyType">岗位作息</button>-->
+        <!--        <button type="button" class="btn btn-secondary" value="socialSecurity">社保公积金</button>-->
+        <!--        <button type="button" class="btn btn-secondary" value="postFeature">岗位特征</button>-->
+    </div>
+</div>
+
+
+<div style="margin-top: 15px"></div>
+
+<div id="addModel" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+
+    <form id="myform">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">添加分类</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="add_kind" class="col-form-label">类型:</label>
+                            <select type="text" class="form-control" id="add_kind">
+                                <option value=""></option>
+                                <option value="areaType">行业类别</option>
+                                <option value="postType">岗位类别</option>
+                                <option value="postLevelType">岗位级别</option>
+                                <option value="postLobbyType">岗位作息</option>
+                                <option value="socialSecurity">社保公积金</option>
+                                <option value="postFeature">岗位特征</option>
+                            </select>
+                        </div>
+                        <div class="form-group" id="isp" style="display: none">
+                            <label for="add_parent" class="col-form-label">上级:</label>
+                            <select type="text" class="form-control" id="add_parent">
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="add_name" class="col-form-label">名称:</label>
+                            <input class="form-control" id="add_name"/>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="commitAdd">添加</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>候选人</th>
+            <th>一级分类</th>
+            <th>二级分类</th>
+            <th>分数</th>
+            <th>等级</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+
+    Date.prototype.format = function (format) {
+        var o = {
+            "M+": this.getMonth() + 1, //month
+            "d+": this.getDate(),    //day
+            "h+": this.getHours(),   //hour
+            "m+": this.getMinutes(), //minute
+            "s+": this.getSeconds(), //second
+            "q+": Math.floor((this.getMonth() + 3) / 3),  //quarter
+            "S": this.getMilliseconds() //millisecond
+        }
+        if (/(y+)/.test(format)) format = format.replace(RegExp.$1,
+            (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o) if (new RegExp("(" + k + ")").test(format))
+            format = format.replace(RegExp.$1,
+                RegExp.$1.length == 1 ? o[k] :
+                    ("00" + o[k]).substr(("" + o[k]).length));
+        return format;
+    }
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+
+    function xhr_common_send(method, url, data, succCallback = null) {
+        var xhr = new XMLHttpRequest();
+        xhr.open(method, url);
+
+        xhr.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+
+        var csrftoken = getCookie('csrftoken');
+
+        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+        console.log("------------------------------------>")
+
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4) { //if complete
+                // 2xx is ok, ref: https://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+                if (xhr.status >= 200 && xhr.status < 300) {
+                    if (succCallback) {
+                        succCallback(xhr.response)
+                    }
+                    console.log("success")
+                } else {
+                    console.log("csrftoken: ", csrftoken)
+                    console.log(xhr.responseText)
+                    console.log(xhr.status)
+                    console.log(xhr.statusText)
+                    console.log(url)
+                    console.log(data)
+                    alert("添加失败，已存在");
+                }
+            }
+        }
+        xhr.send(JSON.stringify(data));
+    }
+
+    var state = []
+    var parent = 0;
+
+    var kind = "areaType"
+
+
+    function readKinds() {
+
+        console.log("readKinds readKinds readKinds", kind)
+        $.ajax({
+            url: '/api/itemInFocusPoints/',
+            type: 'GET',
+            data: {
+                focus: kind,
+                start: 0,
+                length: 99999999,
+            },
+            success: function (res) {
+                $('#subbox').empty()
+                console.log("Get Some Info.........", res)
+                state = []
+                for (var item of res.results) {
+                    console.log("Item:", item.id, item.resume, item.focusPoint)
+                    var p = `<button type="button" class="btn btn-secondary childselect" value="${item.id}">${item.name}</button>`
+                    $('#subbox').append(p)
+                }
+            }
+        })
+    }
+
+    readKinds()
+
+    var table = $('#dataTable').DataTable({
+        "processing": true,
+        "serverSide": true,
+        "order": [[0, "desc"]],
+
+        "ajax": {
+            url: "/api/tags/",
+            type: "GET",
+            data: function (d) {
+                d.kind = kind;
+            },
+        },
+
+        "columns": [
+            {"data": "id"},
+            {
+                "data": null, render: function (data, type, row, meta) {
+
+                    // if (data.parent === 0 && !state.includes(data.id) && data.kind === kind) {
+                    //     state.push(data.id)
+                    //     var p = `<button type="button" class="btn btn-secondary childselect" value="${data.id}">${data.name}</button>`
+                    //     $('#subbox').append(p)
+                    //
+                    //
+                    // }
+                    console.log("xxxxxxxxxxxxxxxxxxxxxxxxx")
+
+                    return data.candidateName
+                }
+            },
+            {
+                "data": null, render: function (data, type, row, meta) {
+                    return data.focusPointName
+                }
+            },
+            {
+                "data": null, render: function (data, type, row, meta) {
+                    return data.itemInFocusPointName
+                }
+            },
+            {
+                "data": null, render: function (data, type, row, meta) {
+                    return data.score
+                }
+            },
+            {
+                "data": null, render: function (data, type, row, meta) {
+                    // var t =  `<label style="color: #00F7DE" did="${data.id}">${data.sort}</label>`
+                    var t = `<button type="button" class="btn btn-primary modSort" value="${data.id}">${data.sort}</button>`
+                    return t
+                }
+            },
+            {
+                "data": null, render: function (data, type, row, meta) {
+                    var p = `<button type="button" class="btn btn-primary editLib" value="${data.id}">编辑</button>
+                        <button type="button" class="btn btn-primary delLib" value="${data.id}">删除</button>`;
+                    return p;
+                }
+            }
+        ],
+    });
+
+    $('#add').click(function () {
+        $('#addModel').modal('show')
+    })
+
+    $('#add_kind').change(function () {
+        var kind = $(this).val();
+        if (kind == 'areaType' || kind == 'postType') {
+            //加载类别
+            $.ajax({
+                type: "GET",
+                url: '/api/labellibslist/?kind=' + kind,
+                dataType: "json",
+                success: function (data) {
+                    $('#isp').show();
+                    $('#add_parent').empty()
+                    var results = data.results.filter(r => r.parent === 0);
+                    var base = `<option value="0" selected>顶级</option>`
+                    $('#add_parent').append(base)
+                    for (var result of results) {
+                        var p = `<option value="${result.id}">${result.name}</option>`
+                        $('#add_parent').append(p)
+                    }
+                }
+            });
+        } else {
+            $('#isp').hide();
+        }
+    })
+
+    $('#commitAdd').click(function () {
+        var add_kind = $('#add_kind').val();
+        if (!add_kind || add_kind == '') {
+            layer.msg('请选择分类')
+            return false;
+        }
+        var add_parent = $('#add_parent').val();
+        if (!add_parent) {
+            add_parent = 0
+        }
+        console.log(add_parent)
+        var add_name = $('#add_name').val();
+        console.log(add_name)
+        if (!add_name || add_name == '') {
+            layer.msg('请输入名称')
+            return false;
+        }
+        xhr_common_send('POST', '/api/itemInFocusPoints/', {
+            kind: add_kind,
+            parent: add_parent,
+            name: add_name
+        }, function (data) {
+            if (data == 'success') {
+                console.log("success")
+                $('#addModel').modal('hide')
+                table.draw(false)
+                readKinds()
+                $('#myform')[0].reset();
+            } else {
+                alert(data)
+            }
+        })
+    })
+
+
+    $('body').on('click', '.childselect', function () {
+        var value = $(this).attr('value');
+        parent = value
+        table.draw(false)
+        readKinds()
+
+    });
+
+    $('body').on('click', '.modSort', function () {
+        var value = $(this).attr('value');
+        layer.prompt({title: '请输入序号',}, function (sort, index) {
+            if (isNaN(sort)) {
+                layer.msg('请输入数字');
+                return false;
+            }
+            $.ajax({
+                type: "POST",
+                url: '/api/updatelib',
+                // dataType: "json",
+                data: {
+                    id: value,
+                    sort: sort
+                },
+                success: function (data) {
+                    layer.msg('操作成功')
+                    table.draw(false)
+                    readKinds()
+
+                    layer.close(index);
+                }
+            });
+        });
+    });
+
+
+
+
+    $('body').on('click', '.delLib', function () {
+        var value = $(this).attr('value');
+        var libid = value;
+        console.log('lib id:', libid)
+
+        $.ajax({
+            type: "POST",
+            url: '/api/delLib',
+            // dataType: "json",
+            data: {
+                id: libid
+            },
+            success: function (data) {
+                layer.msg('删除成功')
+                table.draw(false)
+                readKinds()
+
+            }
+        });
+
+        //del
+
+    });
+
+    //edit
+
+    $('body').on('click', '.editLib', function () {
+        var value = $(this).attr('value');
+        var libid = value;
+        console.log('lib id:', libid)
+
+
+        layer.prompt({title: '请输入名称',}, function (title, index) {
+            if(title==''){
+                layer.msg('不能为空');
+                return false
+            }
+            $.ajax({
+                type: "POST",
+                url: '/api/editLib',
+                // dataType: "json",
+                data: {
+                    id: libid,
+                    name: title
+                },
+                success: function (data) {
+                    layer.close(index)
+                    layer.msg('编辑成功')
+                    table.draw(false)
+                    readKinds()
+
+                }
+            });
+
+        })
+
+
+        //del
+
+    });
+
+    $('.btn-secondary').click(function () {
+        parent = 0
+
+        var value = $(this).attr('value');
+        kind = value
+        if (kind == 'areaType' || kind == 'postType') {
+            $('#child').show()
+            $('#subbox').empty()
+            state = []
+            readKinds()
+        } else {
+            $('#child').hide()
+            state = []
+            readKinds()
+
+        }
+        table.draw(false)
+        // readKinds()
+
+    })
+
+
+</script>
+{% endblock%}
